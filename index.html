@@ -1,3255 +1,494 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovación - IA para Optimizar la Planificación Curricular Docente</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
-        :root {
-            --primary-color: #1a73e8;
-            --secondary-color: #34a853;
-            --accent-color: #fbbc05;
-            --dark-color: #202124;
-            --light-color: #f8f9fa;
-            --text-color: #333;
-            --text-light: #fff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-            --primary: #3498db;
-            --secondary: #2ecc71;
-            --accent: #f39c12;
-            --success: #27ae60;
-            --warning: #e67e22;
-            --error: #e74c3c;
-            --dark: #2c3e50;
-            --darker: #1a252f;
-            --light: #ecf0f1;
-            --gray: #7f8c8d;
-            --user-msg: rgba(52, 152, 219, 0.15);
-            --bot-msg: rgba(255, 255, 255, 0.08);
-            --sidebar: #34495e;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --glass: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --glow: 0 0 20px rgba(52, 152, 219, 0.3);
-            --education: #9b59b6;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--light-color);
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--primary-color), #0d47a1);
-            color: var(--text-light);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-icon {
-            margin-right: 10px;
-            font-size: 2rem;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 1.5rem;
-        }
-
-        nav ul li a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--text-light);
-            padding: 180px 0 100px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--dark-color);
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Section Styles */
-        section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            display: inline-block;
-            padding-bottom: 10px;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent-color);
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* Team Section */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .team-member {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .team-member:hover {
-            transform: translateY(-10px);
-        }
-
-        .member-img {
-            height: 200px;
-            background-color: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--primary-color);
-        }
-
-        .member-info {
-            padding: 1.5rem;
-        }
-
-        .member-info h3 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-
-        .member-role {
-            color: var(--secondary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* Project Section */
-        .project-intro {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 3rem;
-        }
-
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            background-color: var(--primary-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -3px;
-        }
-
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            box-sizing: border-box;
-        }
-
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border: 4px solid var(--primary-color);
-            border-radius: 50%;
-            top: 15px;
-            z-index: 1;
-        }
-
-        .timeline-item:nth-child(odd)::after {
-            right: -10px;
-        }
-
-        .timeline-item:nth-child(even)::after {
-            left: -10px;
-        }
-
-        .timeline-content {
-            padding: 20px;
-            background-color: white;
-            border-radius: 6px;
-            box-shadow: var(--shadow);
-        }
-
-        /* Problem Section */
-        .problem-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .problem-category {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .problem-category:hover {
-            transform: translateY(-5px);
-        }
-
-        .problem-category h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .problem-category h3 i {
-            margin-right: 10px;
-            color: var(--accent-color);
-        }
-
-        .problem-list {
-            list-style-type: none;
-        }
-
-        .problem-list li {
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .problem-list li::before {
-            content: '•';
-            color: var(--secondary-color);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        /* Hypothesis Section */
-        .hypothesis-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hypothesis-box {
-            background-color: #f0f7ff;
-            border-left: 4px solid var(--primary-color);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .hypothesis-box h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .hypothesis-box.improved {
-            background-color: #e8f5e9;
-            border-left-color: var(--secondary-color);
-        }
-
-        /* Interviews Section */
-        .interview-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .interview-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .interview-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1.5rem;
-        }
-
-        .interview-name {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .interview-details {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .interview-body {
-            padding: 1.5rem;
-        }
-
-        .question-answer {
-            margin-bottom: 1.5rem;
-        }
-
-        .question {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Survey Section */
-        .survey-table-container {
-            overflow-x: auto;
-            margin-top: 2rem;
-        }
-
-        .survey-table {
-            width: 100%;
-            border-collapse: collapse;
-            box-shadow: var(--shadow);
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .survey-table th, .survey-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .survey-table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-        }
-
-        .survey-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        .survey-table tr:hover {
-            background-color: #f0f7ff;
-        }
-
-        /* Empathy Map Section */
-        .empathy-map {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 1rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .empathy-quadrant {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .quadrant-1 {
-            grid-column: 1;
-            grid-row: 1;
-            border-top: 4px solid #4285f4;
-        }
-
-        .quadrant-2 {
-            grid-column: 2;
-            grid-row: 1;
-            border-top: 4px solid #ea4335;
-        }
-
-        .quadrant-3 {
-            grid-column: 1;
-            grid-row: 2;
-            border-top: 4px solid #fbbc05;
-        }
-
-        .quadrant-4 {
-            grid-column: 2;
-            grid-row: 2;
-            border-top: 4px solid #34a853;
-        }
-
-        .quadrant-5 {
-            grid-column: 1;
-            grid-row: 3;
-            border-top: 4px solid #8e44ad;
-        }
-
-        .quadrant-6 {
-            grid-column: 2;
-            grid-row: 3;
-            border-top: 4px solid #e67e22;
-        }
-
-        .quadrant-title {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--dark-color);
-        }
-
-        /* Insights Section */
-        .insights-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .insight-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .insight-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 100%;
-            background-color: var(--accent-color);
-        }
-
-        .insight-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        /* Solution Section */
-        .solution-approach {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-        }
-
-        .solution-question {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .solution-list {
-            list-style-type: none;
-        }
-
-        .solution-list li {
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .solution-list li::before {
-            content: '✓';
-            color: var(--secondary-color);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        /* Technique Section */
-        .technique-table-container {
-            overflow-x: auto;
-            margin-top: 2rem;
-        }
-
-        .technique-table {
-            width: 100%;
-            border-collapse: collapse;
-            box-shadow: var(--shadow);
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .technique-table th, .technique-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border: 1px solid #e0e0e0;
-        }
-
-        .technique-table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-        }
-
-        .technique-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        /* Value Proposition Section */
-        .value-proposition {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .value-column {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .value-title {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-size: 1.3rem;
-        }
-
-        .value-list {
-            list-style-type: none;
-        }
-
-        .value-list li {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .value-list li::before {
-            content: '•';
-            color: var(--secondary-color);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        /* Customer Journey Section */
-        .journey-container {
-            overflow-x: auto;
-        }
-
-        .journey-table {
-            width: 100%;
-            border-collapse: collapse;
-            box-shadow: var(--shadow);
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            min-width: 800px;
-        }
-
-        .journey-table th, .journey-table td {
-            padding: 15px;
-            text-align: left;
-            border: 1px solid #e0e0e0;
-        }
-
-        .journey-table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-        }
-
-        .journey-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        /* Prototype Section */
-        .prototype-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .prototype-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .prototype-title {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .prototype-list {
-            list-style-type: none;
-        }
-
-        .prototype-list li {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .prototype-list li::before {
-            content: '✓';
-            color: var(--secondary-color);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        /* Objectives Section */
-        .objectives-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .objective-item {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .objective-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .objective-title {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .objective-title i {
-            margin-right: 10px;
-            color: var(--accent-color);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark-color);
-            color: var(--text-light);
-            padding: 3rem 0 1.5rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h3 {
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            color: #ddd;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-color);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid #444;
-        }
-
-        /* Chatbot Styles */
-        .chat-floating-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            box-shadow: var(--glow);
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chat-floating-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .chat-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1001;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .chat-modal-content {
-            width: 90%;
-            max-width: 500px;
-            height: 80vh;
-            max-height: 80vh;
-            background: var(--dark);
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .chat-modal-header {
-            padding: 16px 20px;
-            background: var(--sidebar);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-modal-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-
-        .chat-modal-body .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            min-height: 0;
-        }
-
-        .close-chat-btn {
-            background: none;
-            border: none;
-            color: var(--light);
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .messages-container {
-            flex: 1;
-            padding: 20px 24px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            scroll-behavior: smooth;
-            position: relative;
-            min-height: 0;
-            max-height: 100%;
-        }
-
-        .message {
-            max-width: 85%;
-            display: flex;
-            gap: 12px;
-            animation: messageSlide 0.4s ease;
-        }
-
-        @keyframes messageSlide {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px) scale(0.95); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0) scale(1); 
-            }
-        }
-
-        .user-message {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .user-avatar {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--light);
-            box-shadow: var(--glow);
-        }
-
-        .bot-avatar {
-            background: linear-gradient(135deg, var(--education), #8e44ad);
-            color: white;
-            box-shadow: 0 0 20px rgba(155, 89, 182, 0.4);
-        }
-
-        .message-content {
-            padding: 16px 20px;
-            border-radius: 18px;
-            line-height: 1.5;
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 14px;
-        }
-
-        .user-message .message-content {
-            background: var(--user-msg);
-            border-bottom-right-radius: 6px;
-            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.15);
-        }
-
-        .bot-message .message-content {
-            background: var(--bot-msg);
-            border-bottom-left-radius: 6px;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
-        }
-
-        .message-time {
-            font-size: 11px;
-            color: var(--gray);
-            margin-top: 8px;
-            text-align: right;
-            opacity: 0.7;
-        }
-
-        .bot-message .message-time {
-            text-align: left;
-        }
-
-        .quick-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
-        .quick-action {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 8px 14px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: var(--light);
-        }
-
-        .quick-action:hover {
-            background: var(--primary);
-            color: var(--light);
-            transform: translateY(-2px);
-            box-shadow: var(--glow);
-        }
-
-        .typing-indicator {
-            display: none;
-            align-self: flex-start;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 4px;
-            background: var(--bot-msg);
-            padding: 16px 20px;
-            border-radius: 18px;
-            border-bottom-left-radius: 6px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-            30% { transform: translateY(-8px); opacity: 1; }
-        }
-
-        .input-area {
-            padding: 20px 24px;
-            background: rgba(44, 62, 80, 0.9);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            gap: 12px;
-            backdrop-filter: blur(20px);
-        }
-
-        .message-input {
-            flex: 1;
-            padding: 14px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 18px;
-            outline: none;
-            font-size: 15px;
-            transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--light);
-        }
-
-        .message-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .message-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .send-button {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--light);
-            border: none;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 18px;
-            box-shadow: var(--glow);
-        }
-
-        .send-button:hover {
-            transform: scale(1.05) rotate(5deg);
-            box-shadow: 0 0 30px rgba(52, 152, 219, 0.5);
-        }
-
-        .input-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .input-action {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: var(--light);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .input-action:hover {
-            background: var(--primary);
-            color: var(--light);
-            transform: scale(1.05);
-            box-shadow: var(--glow);
-        }
-
-        .status-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 6px;
-        }
-
-        .status-online {
-            background: var(--success);
-            box-shadow: 0 0 10px var(--success);
-        }
-
-        .status-processing {
-            background: var(--warning);
-            box-shadow: 0 0 10px var(--warning);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 14px 20px;
-            border-radius: 12px;
-            color: white;
-            z-index: 10000;
-            max-width: 350px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            animation: slideIn 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .notification.success {
-            background: rgba(39, 174, 96, 0.9);
-        }
-
-        .notification.error {
-            background: rgba(231, 76, 60, 0.9);
-        }
-
-        .notification.info {
-            background: rgba(52, 152, 219, 0.9);
-        }
-
-        .notification.warning {
-            background: rgba(230, 126, 34, 0.9);
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-
-        .messages-container::-webkit-scrollbar,
-        .content-container::-webkit-scrollbar,
-        .sidebar::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .messages-container::-webkit-scrollbar-track,
-        .content-container::-webkit-scrollbar-track,
-        .sidebar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .messages-container::-webkit-scrollbar-thumb,
-        .content-container::-webkit-scrollbar-thumb,
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-
-        .messages-container::-webkit-scrollbar-thumb:hover,
-        .content-container::-webkit-scrollbar-thumb:hover,
-        .sidebar::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary);
-        }
-
-        /* Login Modal Styles */
-        .login-modal {
-            display: flex;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1002;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .login-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            padding: 40px;
-        }
-
-        .login-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .login-title {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ricos Piqueos – Ceviche & Bebidas | Piqueos Marinos Frescos</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* RESET Y CONFIGURACIÓN GENERAL */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    /* ENCABEZADO */
+    .header {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1553621042-f6e147245754') center/cover no-repeat;
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+    }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        gap: 15px;
+    }
+    
+    .logo-icon {
+        font-size: 42px;
+        color: #FFD700;
+    }
+    
+    .logo-text {
+        font-size: 36px;
+        font-weight: 800;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .tagline {
+        font-size: 18px;
+        margin-bottom: 25px;
+        color: #f0f0f0;
+    }
+    
+    .whatsapp-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(to right, #25D366, #1EBEA5);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 700;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .whatsapp-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        background: linear-gradient(to right, #1EBEA5, #25D366);
+    }
+    
+    /* CONTENIDO PRINCIPAL */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    /* CATEGORÍAS */
+    .category-section {
+        margin: 40px 0;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    .category-header {
+        background: linear-gradient(to right, #c26a00, #e68a00);
+        color: white;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 24px;
+    }
+    
+    .category-icon {
+        font-size: 28px;
+    }
+    
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 25px;
+    }
+    
+    /* TARJETAS DE PRODUCTO */
+    .product-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid #eee;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+    
+    .product-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+    }
+    
+    .product-info {
+        padding: 20px;
+    }
+    
+    .product-title {
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: #c26a00;
+    }
+    
+    .product-desc {
+        color: #666;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    
+    .product-price {
+        color: #1f7a1f;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    
+    /* BEBIDAS Y EXTRAS */
+    .extras-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 25px;
+    }
+    
+    .extra-item {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #25D366;
+        transition: transform 0.2s ease;
+    }
+    
+    .extra-item:hover {
+        transform: translateX(5px);
+    }
+    
+    .extra-icon {
+        font-size: 24px;
+        color: #c26a00;
+        min-width: 40px;
+    }
+    
+    /* INFORMACIÓN DE CONTACTO */
+    .contact-section {
+        background: linear-gradient(to right, #1f7a1f, #2ecc71);
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 15px;
+        margin: 40px 0;
+    }
+    
+    .contact-title {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+    
+    .contact-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin: 25px 0;
+    }
+    
+    .contact-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .contact-icon {
+        font-size: 28px;
+        color: #FFD700;
+    }
+    
+    .payment-methods {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0;
+    }
+    
+    .payment-icon {
+        font-size: 32px;
+        color: white;
+        background: rgba(255, 255, 255, 0.2);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .price-tag {
+        background: #FFD700;
+        color: #333;
+        padding: 10px 25px;
+        border-radius: 50px;
+        display: inline-block;
+        font-weight: 700;
+        font-size: 20px;
+        margin-top: 15px;
+    }
+    
+    /* FOOTER */
+    .footer {
+        background: #222;
+        color: #ccc;
+        text-align: center;
+        padding: 25px 20px;
+        margin-top: 40px;
+    }
+    
+    .footer-text {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 15px;
+    }
+    
+    .social-icon {
+        color: #ccc;
+        font-size: 20px;
+        transition: color 0.3s ease;
+    }
+    
+    .social-icon:hover {
+        color: #25D366;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .logo-text {
             font-size: 28px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
-
-        .login-subtitle {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 30px;
+        
+        .products-grid, .extras-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
-
-        .login-form {
-            display: flex;
+        
+        .contact-info {
             flex-direction: column;
             gap: 20px;
         }
-
-        .login-input {
-            width: 100%;
-            padding: 16px 20px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--light);
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .login-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-        }
-
-        .login-button {
-            width: 100%;
-            padding: 16px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--light);
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: var(--glow);
-        }
-
-        .login-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(52, 152, 219, 0.5);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-light);
-        }
-
-        .user-avatar-small {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: white;
-        }
-
-        .logout-btn {
-            background: none;
-            border: 1px solid rgba(255,255,255,0.3);
-            color: var(--text-light);
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-left: 10px;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .empathy-map {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
-            }
-            
-            .empathy-quadrant {
-                grid-column: 1;
-            }
-            
-            .quadrant-1 { grid-row: 1; }
-            .quadrant-2 { grid-row: 2; }
-            .quadrant-3 { grid-row: 3; }
-            .quadrant-4 { grid-row: 4; }
-            .quadrant-5 { grid-row: 5; }
-            .quadrant-6 { grid-row: 6; }
-            
-            .value-proposition {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0 0.5rem 0.5rem;
-            }
-            
-            .hero {
-                padding: 150px 0 80px;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
-            
-            .timeline::after {
-                left: 31px;
-            }
-            
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-            
-            .timeline-item:nth-child(even) {
-                left: 0;
-            }
-            
-            .timeline-item::after {
-                left: 21px;
-            }
-            
-            .timeline-item:nth-child(odd)::after,
-            .timeline-item:nth-child(even)::after {
-                left: 21px;
-            }
-            
-            .message {
-                max-width: 90%;
-            }
-
-            .input-area {
-                padding: 16px 20px;
-            }
-
-            .chat-modal-content {
-                width: 95%;
-                height: 85vh;
-                max-height: 85vh;
-            }
-
-            .user-info {
-                flex-direction: column;
-                gap: 5px;
-                margin-top: 10px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .mobile-menu-btn {
-                display: block;
-                position: absolute;
-                right: 20px;
-                top: 15px;
-            }
-            
-            nav {
-                width: 100%;
-                display: none;
-            }
-            
-            nav.active {
-                display: block;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                margin-top: 1rem;
-            }
-            
-            nav ul li {
-                margin: 0.5rem 0;
-            }
-            
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .message {
-                max-width: 95%;
-            }
-
-            .login-card {
-                padding: 30px 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Modal de Login -->
-    <div class="login-modal" id="loginModal">
-        <div class="login-container">
-            <div class="login-card">
-                <div class="logo" style="justify-content: center; margin-bottom: 20px;">
-                    <div class="logo-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="logo-text">Innovación Educativa</div>
-                </div>
-                <h1 class="login-title">Acceso al Sistema</h1>
-                <p class="login-subtitle">Inicia sesión para acceder al contenido</p>
-                
-                <div class="login-form">
-                    <input type="text" class="login-input" id="loginUsername" placeholder="Usuario" value="docente">
-                    <input type="password" class="login-input" id="loginPassword" placeholder="Contraseña" value="password">
-                    <button class="login-button" id="loginButton">
-                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                    </button>
-                </div>
-                
-                <p style="margin-top: 20px; color: rgba(255,255,255,0.5); font-size: 14px;">
-                    Usa: docente / password
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <span class="logo-icon">⚡</span>
-                    <span>Innovación Educativa</span>
-                </div>
-                <button class="mobile-menu-btn">☰</button>
-                <nav id="main-nav">
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#equipo">Equipo</a></li>
-                        <li><a href="#proyecto">Proyecto</a></li>
-                        <li><a href="#problema">Problema</a></li>
-                        <li><a href="#hipotesis">Hipótesis</a></li>
-                        <li><a href="#entrevistas">Entrevistas</a></li>
-                        <li><a href="#soluciones">Soluciones</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
-                        <li>
-                            <div class="user-info" id="userInfo" style="display: none;">
-                                <div class="user-avatar-small">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <span id="userNameDisplay">Usuario</span>
-                                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero" id="inicio">
-        <div class="container">
-            <h1>Inteligencia Artificial para Optimizar el Tiempo en la Planificación Curricular Docente</h1>
-            <p>Una solución innovadora que utiliza herramientas de IA para mejorar la eficiencia en la planificación educativa y reducir la carga administrativa de los docentes.</p>
-            <a href="#proyecto" class="btn">Conocer más</a>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section id="equipo">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nuestro Equipo</h2>
-            </div>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-img">
-                        <span>👩‍💼</span>
-                    </div>
-                    <div class="member-info">
-                        <h3>Ruth Yvana Flores Guerrero</h3>
-                        <div class="member-role">Especialista en Innovación Educativa</div>
-                        <p>Experta en integración tecnológica en entornos educativos.</p>
-                    </div>
-                </div>
-                <div class="team-member">
-                    <div class="member-img">
-                        <span>👩‍🏫</span>
-                    </div>
-                    <div class="member-info">
-                        <h3>Maribel Elvira Salvatierra Vizcardo</h3>
-                        <div class="member-role">Pedagoga y Diseñadora Instruccional</div>
-                        <p>Especializada en diseño curricular y metodologías activas.</p>
-                    </div>
-                </div>
-                <div class="team-member">
-                    <div class="member-img">
-                        <span>👨‍💻</span>
-                    </div>
-                    <div class="member-info">
-                        <h3>Edgar Diaz Aguilar</h3>
-                        <div class="member-role">Especialista en Tecnología Educativa</div>
-                        <p>Enfoque en implementación de herramientas digitales.</p>
-                    </div>
-                </div>
-                <div class="team-member">
-                    <div class="member-img">
-                        <span>👨‍🔬</span>
-                    </div>
-                    <div class="member-info">
-                        <h3>Hailey Alexander Rivas Pozo</h3>
-                        <div class="member-role">Investigador en IA Aplicada</div>
-                        <p>Experto en aplicaciones de inteligencia artificial en educación.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Project Section -->
-    <section id="proyecto">
-        <div class="container">
-            <div class="section-title">
-                <h2>Presentación del Proyecto</h2>
-            </div>
-            <div class="project-intro">
-                <h3>Contexto del Problema</h3>
-                <p>Se identificó que los docentes del Instituto de Educación Superior Tecnológico Público "San Agustín" de Jaén, Cajamarca, invierten una cantidad considerable de tiempo en la elaboración de planificaciones y materiales académicos. Este proceso se realiza de forma manual y tradicional, sin el apoyo de herramientas tecnológicas avanzadas.</p>
-                <p>La causa de este comportamiento radica en la falta de capacitación y actualización tecnológica del personal docente, lo que genera una oportunidad para optimizar el tiempo y mejorar la eficiencia en la planificación curricular del Programa de Estudios de Asistencia Administrativa.</p>
-            </div>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Detección del Problema</h3>
-                        <p>Identificación de la sobrecarga administrativa en docentes y la falta de herramientas tecnológicas para optimizar la planificación curricular.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Investigación y Análisis</h3>
-                        <p>Realización de entrevistas y encuestas a docentes para comprender a fondo sus necesidades y desafíos en la planificación educativa.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Desarrollo de la Propuesta</h3>
-                        <p>Diseño de una solución basada en inteligencia artificial para optimizar los procesos de planificación curricular docente.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Implementación y Pruebas</h3>
-                        <p>Creación de prototipos y realización de pruebas con docentes para validar la efectividad de la solución propuesta.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Problem Section -->
-    <section id="problema">
-        <div class="container">
-            <div class="section-title">
-                <h2>Análisis del Problema</h2>
-            </div>
-            <div class="problem-categories">
-                <div class="problem-category">
-                    <h3><i>📚</i> Planificación Curricular</h3>
-                    <ul class="problem-list">
-                        <li>Inversión excesiva de tiempo en elaboración manual de planificaciones</li>
-                        <li>Falta de herramientas tecnológicas avanzadas para optimizar procesos</li>
-                        <li>Dificultad para personalizar contenidos según ritmos de aprendizaje</li>
-                        <li>Sobrecarga de tareas administrativas y pedagógicas</li>
-                    </ul>
-                </div>
-                <div class="problem-category">
-                    <h3><i>👨‍🏫</i> Capacitación Docente</h3>
-                    <ul class="problem-list">
-                        <li>Insuficiente capacitación en herramientas de inteligencia artificial</li>
-                        <li>Limitado acceso a recursos digitales actualizados</li>
-                        <li>Escasa cultura innovadora en la institución</li>
-                        <li>Falta de acompañamiento institucional en innovación digital</li>
-                    </ul>
-                </div>
-                <div class="problem-category">
-                    <h3><i>⚙️</i> Procesos Institucionales</h3>
-                    <ul class="problem-list">
-                        <li>Ausencia de un plan de capacitación sobre el uso de IA</li>
-                        <li>Falta de políticas éticas para el uso de tecnologías emergentes</li>
-                        <li>Resistencia al cambio y mantenimiento de prácticas tradicionales</li>
-                        <li>Falta de integración tecnológica en rutinas docentes</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hypothesis Section -->
-    <section id="hipotesis">
-        <div class="container">
-            <div class="section-title">
-                <h2>Hipótesis del Proyecto</h2>
-            </div>
-            <div class="hypothesis-container">
-                <div class="hypothesis-box">
-                    <h3>Hipótesis Inicial</h3>
-                    <p>Si los docentes del Instituto "San Agustín" reciben formación sistemática en el uso de herramientas de Inteligencia Artificial, entonces podrán optimizar el tiempo y mejorar la eficiencia en la planificación curricular del Programa de Estudios de Asistencia Administrativa.</p>
-                </div>
-                <div class="hypothesis-box improved">
-                    <h3>Hipótesis Mejorada</h3>
-                    <p>La implementación de un programa de formación docente en el uso de herramientas de Inteligencia Artificial permitirá mejorar significativamente la eficiencia y optimización del tiempo en los procesos de planificación curricular del Programa de Estudios de Asistencia Administrativa del Instituto de Educación Superior Tecnológico Público "San Agustín", en la provincia de Jaén, Cajamarca.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interviews Section -->
-    <section id="entrevistas">
-        <div class="container">
-            <div class="section-title">
-                <h2>Entrevistas a Docentes</h2>
-            </div>
-            <div class="interview-container">
-                <div class="interview-card">
-                    <div class="interview-header">
-                        <div class="interview-name">Arévalo Silva Segunda Luisa</div>
-                        <div class="interview-details">
-                            <span>Edad: 52 años</span>
-                            <span>Profesión: Contadora</span>
-                            <span>Experiencia: 15 años</span>
-                        </div>
-                    </div>
-                    <div class="interview-body">
-                        <div class="question-answer">
-                            <div class="question">¿Qué tareas específicas te consumen más tiempo y te generan mayor frustración?</div>
-                            <div class="answer">Las tareas que más tiempo me consumen son la planificación detallada (sesión de clase) y la revisión de trabajos académicos, lo que genera frustración por la sobrecarga.</div>
-                        </div>
-                        <div class="question-answer">
-                            <div class="question">¿Cómo distribuyes actualmente tu tiempo entre planificación, enseñanza y evaluación?</div>
-                            <div class="answer">40% en planificación, 40% en enseñanza y 20% en evaluación.</div>
-                        </div>
-                        <div class="question-answer">
-                            <div class="question">¿En qué aspectos de la planificación crees que la IA podría ser más útil?</div>
-                            <div class="answer">La IA podría ser más útil en la organización temporal y en la personalización de contenidos actualizados.</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="interview-card">
-                    <div class="interview-header">
-                        <div class="interview-name">Balarezo Ramírez Dany Altemira</div>
-                        <div class="interview-details">
-                            <span>Edad: 62 años</span>
-                            <span>Profesión: Contadora</span>
-                            <span>Experiencia: 36 años</span>
-                        </div>
-                    </div>
-                    <div class="interview-body">
-                        <div class="question-answer">
-                            <div class="question">¿Qué tareas específicas te consumen más tiempo y te generan mayor frustración?</div>
-                            <div class="answer">La parte que más tiempo me toma es la planificación semanal y mensual, porque debo revisar los sílabos, ajustar los contenidos y elaborar materiales manualmente.</div>
-                        </div>
-                        <div class="question-answer">
-                            <div class="question">¿Cómo distribuyes actualmente tu tiempo entre planificación, enseñanza y evaluación?</div>
-                            <div class="answer">Diría que un 50% a la planificación, 30% a la enseñanza y el 20% a la evaluación.</div>
-                        </div>
-                        <div class="question-answer">
-                            <div class="question">¿En qué aspectos de la planificación crees que la IA podría ser más útil?</div>
-                            <div class="answer">Creo que podría ayudar en la organización del tiempo o tal vez en dar ideas para mejorar materiales. Pero no sabría usarla todavía; necesitaría que me enseñen primero cómo funciona.</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="interview-card">
-                    <div class="interview-header">
-                        <div class="interview-name">Diaz Silvia Violeta Katherin</div>
-                        <div class="interview-details">
-                            <span>Edad: 35 años</span>
-                            <span>Profesión: Administradora</span>
-                            <span>Experiencia: 2 años</span>
-                        </div>
-                    </div>
-                    <div class="interview-body">
-                        <div class="question-answer">
-                            <div class="question">¿Qué tareas específicas te consumen más tiempo y te generan mayor frustración?</div>
-                            <div class="answer">Quizá en algunas ocasiones son las correcciones de trabajos y la planificación de algunos temas porque quiero hacerlo más entendible posible y que se adapte a la realidad.</div>
-                        </div>
-                        <div class="question-answer">
-                            <div class="question">¿Cómo distribuyes actualmente tu tiempo entre planificación, enseñanza y evaluación?</div>
-                            <div class="answer">Aproximadamente, dedico un 40% de mi tiempo a la planificación, un 40% a la enseñanza directa y un 20% a la evaluación y retroalimentación.</div>
-                        </div>
-                        <div class="question-answer">
-                            <div class="question">¿En qué aspectos de la planificación crees que la IA podría ser más útil?</div>
-                            <div class="answer">La IA sería especialmente útil en la organización temporal y la generación de propuestas didácticas iniciales, ya que puede agilizar la estructura base de una sesión.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Survey Section -->
-    <section id="encuestas">
-        <div class="container">
-            <div class="section-title">
-                <h2>Encuestas a Docentes</h2>
-            </div>
-            <div class="survey-table-container">
-                <table class="survey-table">
-                    <thead>
-                        <tr>
-                            <th>Pregunta</th>
-                            <th>Luisa Arévalo (52 años)</th>
-                            <th>Dany Balarezo (62 años)</th>
-                            <th>Violeta Díaz (35 años)</th>
-                            <th>Conclusión General</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>¿Qué tareas consumen más tiempo?</td>
-                            <td>Planificación detallada y revisión de trabajos</td>
-                            <td>Planificación semanal/mensual y evaluación</td>
-                            <td>Correcciones y planificación de temas</td>
-                            <td>La planificación detallada y la evaluación son las tareas más demandantes</td>
-                        </tr>
-                        <tr>
-                            <td>Distribución del tiempo</td>
-                            <td>40% planificación, 40% enseñanza, 20% evaluación</td>
-                            <td>50% planificación, 30% enseñanza, 20% evaluación</td>
-                            <td>40% planificación, 40% enseñanza, 20% evaluación</td>
-                            <td>La planificación consume entre 40-50% del tiempo docente</td>
-                        </tr>
-                        <tr>
-                            <td>Información valiosa para personalización</td>
-                            <td>Estilos y ritmos de aprendizaje</td>
-                            <td>Observación directa de estudiantes</td>
-                            <td>Conocimientos previos y motivación</td>
-                            <td>Diversos enfoques según experiencia, pero coinciden en la importancia de adaptación</td>
-                        </tr>
-                        <tr>
-                            <td>Aspectos donde IA sería más útil</td>
-                            <td>Organización temporal y personalización</td>
-                            <td>Organización del tiempo e ideas para materiales</td>
-                            <td>Organización temporal y propuestas didácticas</td>
-                            <td>La organización temporal es el área donde se percibe mayor utilidad de la IA</td>
-                        </tr>
-                        <tr>
-                            <td>Preferencia de asistente de IA</td>
-                            <td>Opciones personalizadas para elegir</td>
-                            <td>Opciones, no automatización completa</td>
-                            <td>Opciones sugeridas manteniendo control docente</td>
-                            <td>Prefieren opciones sugeridas manteniendo el control sobre la planificación final</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- Empathy Map Section -->
-    <section id="mapa-empatia">
-        <div class="container">
-            <div class="section-title">
-                <h2>Mapa de Empatía</h2>
-            </div>
-            <div class="empathy-map">
-                <div class="empathy-quadrant quadrant-1">
-                    <div class="quadrant-title">¿Qué piensa y siente?</div>
-                    <ul>
-                        <li>Preocupación por la falta de capacitación en IA</li>
-                        <li>Deseo de actualizarse tecnológicamente</li>
-                        <li>Inquietud por mantener el componente humano en la educación</li>
-                        <li>Aspiración a mejorar la eficiencia en la planificación</li>
-                    </ul>
-                </div>
-                <div class="empathy-quadrant quadrant-2">
-                    <div class="quadrant-title">¿Qué oye?</div>
-                    <ul>
-                        <li>Comentarios sobre colegas que utilizan herramientas de IA en otras instituciones</li>
-                        <li>Opiniones de estudiantes sobre el uso de IA en trabajos de investigación</li>
-                        <li>Advertencias éticas sobre riesgos de privacidad con el uso de datos</li>
-                        <li>Que en la institución carece de un plan de capacitación sobre IA</li>
-                    </ul>
-                </div>
-                <div class="empathy-quadrant quadrant-3">
-                    <div class="quadrant-title">¿Qué dice y hace?</div>
-                    <ul>
-                        <li>Actúa con responsabilidad y disposición</li>
-                        <li>Utiliza métodos tradicionales de planificación</li>
-                        <li>Muestra limitaciones en el uso de herramientas de IA</li>
-                        <li>Expresa interés por modernizar su práctica docente</li>
-                    </ul>
-                </div>
-                <div class="empathy-quadrant quadrant-4">
-                    <div class="quadrant-title">¿Qué ve?</div>
-                    <ul>
-                        <li>Algunos colegas en permanente capacitación sobre el uso de IA</li>
-                        <li>Falta de recursos tecnológicos en la institución</li>
-                        <li>En otras instituciones hacen uso de IA para planificaciones</li>
-                        <li>Falta de acompañamiento institucional en innovación</li>
-                    </ul>
-                </div>
-                <div class="empathy-quadrant quadrant-5">
-                    <div class="quadrant-title">Esfuerzos, Miedos y Frustraciones</div>
-                    <ul>
-                        <li>Miedo al intentar adaptarse al cambio y uso correcto de IA</li>
-                        <li>Dedican tiempo extra para aprender nuevas herramientas</li>
-                        <li>Participan en talleres cuando la institución los ofrece</li>
-                        <li>Frustración por falta de formación y recursos tecnológicos</li>
-                    </ul>
-                </div>
-                <div class="empathy-quadrant quadrant-6">
-                    <div class="quadrant-title">Resultados, Deseos y Necesidades</div>
-                    <ul>
-                        <li>Ahorro de tiempo en planificación</li>
-                        <li>Personalización del aprendizaje</li>
-                        <li>Herramientas con sugerencias y control del docente</li>
-                        <li>Capacitación y políticas éticas en IA</li>
-                        <li>Innovación pedagógica sostenible</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Insights Section -->
-    <section id="insights">
-        <div class="container">
-            <div class="section-title">
-                <h2>Insights del Proyecto</h2>
-            </div>
-            <div class="insights-container">
-                <div class="insight-card">
-                    <h3>Insight Principal</h3>
-                    <p>"La principal barrera para optimizar la planificación docente mediante IA es la falta de capacitación y actualización tecnológica del personal."</p>
-                </div>
-                <div class="insight-card">
-                    <h3>Oportunidad Identificada</h3>
-                    <p>La falta de dominio de herramientas de Inteligencia Artificial por el personal docente genera una oportunidad para optimizar el tiempo y mejorar la eficiencia en la planificación curricular.</p>
-                </div>
-                <div class="insight-card">
-                    <h3>Beneficio Potencial</h3>
-                    <p>"El uso habitual de IA permite a los docentes recuperar tiempo relevante que pueden dedicar a diseño, interacción y actividades de mayor valor pedagógico."</p>
-                </div>
-                <div class="insight-card">
-                    <h3>Barrera Cultural</h3>
-                    <p>El desconocimiento de los beneficios prácticos de la Inteligencia Artificial genera resistencia al cambio y mantiene prácticas pedagógicas tradicionales.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section id="soluciones">
-        <div class="container">
-            <div class="section-title">
-                <h2>Soluciones Propuestas</h2>
-            </div>
-            
-            <div class="solution-approach">
-                <div class="solution-question">¿Cómo podríamos aprovechar las herramientas de Inteligencia Artificial para optimizar el tiempo que los docentes destinan a la planificación curricular?</div>
-                <ul class="solution-list">
-                    <li>Utilizar una herramienta líder que genera sesiones educativas alineadas con la normativa educativa vigente en menos de 30 segundos.</li>
-                    <li>Taller permanente de capacitación práctica en IA educativa.</li>
-                </ul>
-            </div>
-            
-            <div class="solution-approach">
-                <div class="solution-question">¿Cómo podríamos capacitar al personal docente para que domine el uso de la Inteligencia Artificial en sus procesos de planificación?</div>
-                <ul class="solution-list">
-                    <li>Programa híbrido por micro credenciales centrado en proyectos reales.</li>
-                    <li>Laboratorio de innovación docente ("IA Pedagógica") con rotación práctica.</li>
-                    <li>Acompañamiento sostenido tipo "coaching pedagógico con IA" + red de práctica.</li>
-                </ul>
-            </div>
-            
-            <div class="solution-approach">
-                <div class="solution-question">¿Cómo podríamos integrar la Inteligencia Artificial en la práctica docente sin generar una carga adicional de trabajo?</div>
-                <ul class="solution-list">
-                    <li>Implementación de un asistente virtual institucional para la planificación curricular.</li>
-                    <li>Diseñar talleres cortos (1-2 horas) para enseñar a los docentes a usar herramientas de IA en tareas específicas.</li>
-                    <li>Implementar una plataforma educativa que permita a los docentes planificar con asistencia de IA.</li>
-                </ul>
-            </div>
-            
-            <div class="solution-approach">
-                <div class="solution-question">¿Cómo podríamos fomentar una cultura de innovación educativa que promueva el uso responsable de la Inteligencia Artificial?</div>
-                <ul class="solution-list">
-                    <li>Laboratorios de Innovación Curricular con gobernanza ética y co-creación docente-estudiante.</li>
-                    <li>Marco de competencias y micro credenciales en uso responsable de IA.</li>
-                    <li>Plataforma comunitaria de recursos abiertos y bancos de escenarios didácticos evaluados.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technique Section -->
-    <section id="tecnicas">
-        <div class="container">
-            <div class="section-title">
-                <h2>Técnicas de Evaluación de Soluciones</h2>
-            </div>
-            <div class="technique-table-container">
-                <table class="technique-table">
-                    <thead>
-                        <tr>
-                            <th>Posibles Ideas de Solución</th>
-                            <th>Excelente</th>
-                            <th>Probable</th>
-                            <th>Oportunidad Posible</th>
-                            <th>50/50</th>
-                            <th>No es Viable</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Utilizar herramienta líder que genera sesiones educativas en menos de 30 segundos</td>
-                            <td>MS</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Taller permanente de capacitación práctica en IA educativa</td>
-                            <td>YF, AR</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Programa híbrido por micro credenciales centrado en proyectos reales</td>
-                            <td>ED</td>
-                            <td></td>
-                            <td>AR</td>
-                            <td></td>
-                            <td>MS</td>
-                        </tr>
-                        <tr>
-                            <td>Acompañamiento sostenido tipo "coaching pedagógico con IA" + red de práctica</td>
-                            <td>YF, ED, MS</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Implementación de un asistente virtual institucional para la planificación curricular</td>
-                            <td>AR</td>
-                            <td>ED</td>
-                            <td>YF</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Diseñar talleres cortos (1-2 horas) para enseñar uso de herramientas de IA</td>
-                            <td>ED</td>
-                            <td>YF</td>
-                            <td>AR</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Implementar una plataforma educativa con asistencia de IA</td>
-                            <td>MS</td>
-                            <td></td>
-                            <td>YF, AR</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="solution-approach" style="margin-top: 2rem;">
-                <h3 style="color: var(--primary-color);">Propuesta de Solución Consolidada</h3>
-                <p style="font-size: 1.1rem; font-weight: 600;">Implementación de un asistente virtual institucional para la planificación curricular o una herramienta de IA que apoye a los docentes en la redacción de la planificación de sus clases, de sus sílabos, contenido visual y redacción de correos y también evaluación de competencias.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Value Proposition Section -->
-    <section id="propuesta-valor">
-        <div class="container">
-            <div class="section-title">
-                <h2>Propuesta de Valor</h2>
-            </div>
-            <div class="value-proposition">
-                <div class="value-column">
-                    <div class="value-title">Productos y Servicios</div>
-                    <ul class="value-list">
-                        <li>Asesoría virtual institucional con IA generativa</li>
-                        <li>Módulo para crear planificaciones, sílabos y materiales visuales</li>
-                        <li>Redacción automática de correos y documentos educativos</li>
-                        <li>Herramienta de evaluación y retroalimentación de competencias</li>
-                        <li>Programa de capacitación docente en uso de IA</li>
-                    </ul>
-                </div>
-                <div class="value-column">
-                    <div class="value-title">Creadores de Alegría</div>
-                    <ul class="value-list">
-                        <li>Facilita la innovación pedagógica y el uso de tecnología educativa</li>
-                        <li>Mejora la calidad y personalización de las clases</li>
-                        <li>Aumenta la motivación docente al sentirse más competente digitalmente</li>
-                        <li>Promueve una cultura institucional de innovación</li>
-                    </ul>
-                </div>
-                <div class="value-column">
-                    <div class="value-title">Aliviadores de Frustraciones</div>
-                    <ul class="value-list">
-                        <li>Automatiza tareas repetitivas como la redacción o evaluación</li>
-                        <li>Reduce el tiempo invertido en planificación curricular</li>
-                        <li>Brinda soporte continuo al docente, incluso sin conocimientos técnicos</li>
-                        <li>Disminuye la carga laboral administrativa</li>
-                    </ul>
-                </div>
-                <div class="value-column">
-                    <div class="value-title">Beneficios para el Docente</div>
-                    <ul class="value-list">
-                        <li>Ahorrar tiempo en la planificación y redacción</li>
-                        <li>Sentirse actualizado tecnológicamente</li>
-                        <li>Contar con materiales de calidad y visualmente atractivos</li>
-                        <li>Mejorar la efectividad de sus clases</li>
-                        <li>Recibir apoyo institucional y sentirse más seguro usando IA</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Customer Journey Section -->
-    <section id="customer-journey">
-        <div class="container">
-            <div class="section-title">
-                <h2>Customer Journey Map</h2>
-            </div>
-            <div class="journey-container">
-                <table class="journey-table">
-                    <thead>
-                        <tr>
-                            <th>Fase del Viaje</th>
-                            <th>Acciones del Docente</th>
-                            <th>Pensamientos</th>
-                            <th>Emociones</th>
-                            <th>Puntos de Contacto</th>
-                            <th>Oportunidades de Mejora</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1. Descubrimiento</td>
-                            <td>Escucha sobre el asistente virtual institucional con IA en una reunión o capacitación</td>
-                            <td>"¿Será realmente útil o complicado de usar?"</td>
-                            <td>Curiosidad y duda</td>
-                            <td>Charlas institucionales, correos, carteles informativos</td>
-                            <td>Crear campañas de sensibilización y mostrar beneficios concretos</td>
-                        </tr>
-                        <tr>
-                            <td>2. Interés / Exploración</td>
-                            <td>Investiga sobre cómo funciona, ve demostraciones o tutoriales</td>
-                            <td>"Parece interesante, pero no sé si podré manejarlo"</td>
-                            <td>Inseguridad</td>
-                            <td>Plataforma institucional, videos tutoriales, talleres introductorios</td>
-                            <td>Ofrecer sesiones prácticas y acompañamiento inicial</td>
-                        </tr>
-                        <tr>
-                            <td>3. Prueba / Implementación</td>
-                            <td>Comienza a usar el asistente para planificar una clase o redactar un sílabo</td>
-                            <td>"¡Esto me ahorra tiempo! Aunque todavía tengo dudas"</td>
-                            <td>Satisfacción con leve ansiedad</td>
-                            <td>Plataforma de IA, soporte técnico, mentoría docente</td>
-                            <td>Simplificar interfaz y añadir chat de soporte en tiempo real</td>
-                        </tr>
-                        <tr>
-                            <td>4. Uso Regular</td>
-                            <td>Utiliza la IA semanalmente para planificar, crear materiales y redactar correos</td>
-                            <td>"Ahora puedo dedicar más tiempo a mis estudiantes"</td>
-                            <td>Motivación y alivio</td>
-                            <td>Asistente virtual, correo institucional, aula virtual</td>
-                            <td>Añadir plantillas personalizadas y recomendaciones automáticas</td>
-                        </tr>
-                        <tr>
-                            <td>5. Evaluación / Fidelización</td>
-                            <td>Recomienda la herramienta a otros docentes y aporta sugerencias</td>
-                            <td>"Esta herramienta debería usarse en toda la institución"</td>
-                            <td>Orgullo y entusiasmo</td>
-                            <td>Encuestas de satisfacción, foros docentes</td>
-                            <td>Implementar reconocimientos a docentes innovadores y espacios de intercambio</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- Prototype Section -->
-    <section id="prototipo">
-        <div class="container">
-            <div class="section-title">
-                <h2>Protocolo de Creación de Prototipos</h2>
-            </div>
-            <div class="prototype-container">
-                <div class="prototype-card">
-                    <div class="prototype-title">¿Qué va a ser probado?</div>
-                    <ul class="prototype-list">
-                        <li>Diseño del asistente virtual de IA</li>
-                        <li>Estructura y flujo de interacción con el docente</li>
-                        <li>Funcionalidad del asistente (planificación, redacción y evaluación)</li>
-                        <li>Originalidad e innovación en el uso de IA para el ámbito educativo</li>
-                        <li>Diseño visual e interfaz del asistente virtual institucional</li>
-                        <li>Integración de funciones de evaluación y retroalimentación docente</li>
-                        <li>Nivel de aceptación y facilidad de uso por parte de los docentes</li>
-                    </ul>
-                </div>
-                <div class="prototype-card">
-                    <div class="prototype-title">Objetivos del Prototipo</div>
-                    <ul class="prototype-list">
-                        <li>Optimizar el tiempo de planificación docente</li>
-                        <li>Facilitar la redacción de sílabos, clases y correos</li>
-                        <li>Promover la actualización tecnológica del personal</li>
-                        <li>Disminuir la carga administrativa y aumentar la eficiencia docente</li>
-                        <li>Impulsar la innovación pedagógica mediante herramientas de IA</li>
-                        <li>Validar la efectividad del asistente virtual como apoyo en la planificación</li>
-                        <li>Comprobar si la herramienta de IA reduce el tiempo de redacción</li>
-                        <li>Fomentar el uso de tecnologías innovadoras en la práctica pedagógica</li>
-                        <li>Evaluar la satisfacción y adaptabilidad de los docentes</li>
-                    </ul>
-                </div>
-                <div class="prototype-card">
-                    <div class="prototype-title">Proceso de Elaboración</div>
-                    <ul class="prototype-list">
-                        <li>Uso de programas como Canva, PowerPoint, Figma o Word para diseñar el prototipo</li>
-                        <li>Apoyo en imágenes, grabaciones y simulaciones del funcionamiento del asistente</li>
-                        <li>Revisión y validación con docentes de la institución</li>
-                        <li>Registro del proceso en cuadernos de notas o documentos digitales</li>
-                        <li>Diseño inicial del asistente virtual mediante herramientas como Canva o PowerPoint</li>
-                        <li>Elaboración de un prototipo funcional básico (simulación interactiva) con ejemplos</li>
-                        <li>Recopilación de retroalimentación de docentes mediante encuestas o entrevistas</li>
-                        <li>Ajuste del prototipo según las observaciones recibidas</li>
-                        <li>Presentación del prototipo final en formato digital e interactivo para validación</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Objectives Section -->
-    <section id="objetivos">
-        <div class="container">
-            <div class="section-title">
-                <h2>Objetivos del Proyecto</h2>
-            </div>
-            <div class="objectives-container">
-                <div class="objective-item">
-                    <div class="objective-title"><i>🎯</i> Objetivo General</div>
-                    <p>Analizar cómo la inteligencia artificial puede optimizar el tiempo y mejorar la eficiencia en la planificación docente, contribuyendo al fortalecimiento de la innovación pedagógica.</p>
-                </div>
-                <div class="objective-item">
-                    <div class="objective-title"><i>📊</i> Objetivos Específicos</div>
-                    <ul class="value-list">
-                        <li>Identificar las principales dificultades que enfrentan los docentes durante el proceso de planificación educativa.</li>
-                        <li>Explorar las herramientas de inteligencia artificial disponibles que pueden aplicarse en la elaboración y gestión de la planificación docente.</li>
-                        <li>Diseñar una propuesta de planificación optimizada mediante el uso de inteligencia artificial.</li>
-                        <li>Evaluar la percepción y aceptación de los docentes respecto al uso de la inteligencia artificial como apoyo en la planificación.</li>
-                        <li>Formular recomendaciones para la integración ética y pedagógica de la IA en los procesos de planificación educativa.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contacto">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Innovación Educativa</h3>
-                    <p>Proyecto de investigación para optimizar la planificación curricular docente mediante herramientas de Inteligencia Artificial.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Enlaces Rápidos</h3>
-                    <ul class="footer-links">
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#equipo">Nuestro Equipo</a></li>
-                        <li><a href="#proyecto">Proyecto</a></li>
-                        <li><a href="#soluciones">Soluciones</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contacto</h3>
-                    <ul class="footer-links">
-                        <li>Universidad tecnológica Peruana "UTP"</li>
-                        <li>Piura, Perú</li>
-                        <li>admision@utp.edu.pe</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Innovación Educativa - Todos los derechos reservados</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Botón flotante para abrir el chat -->
-    <button class="chat-floating-btn" id="chatFloatingBtn">
-        <i class="fas fa-comments"></i>
-    </button>
+    }
     
-    <!-- Modal del chat -->
-    <div class="chat-modal" id="chatModal">
-        <div class="chat-modal-content">
-            <div class="chat-modal-header">
-                <h3><i class="fas fa-robot"></i> Asistente Edu Assist</h3>
-                <button class="close-chat-btn" id="closeChatBtn">
-                    <i class="fas fa-times"></i>
-                </button>
+    @media (max-width: 480px) {
+        .products-grid, .extras-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+        }
+        
+        .whatsapp-btn {
+            padding: 12px 24px;
+            font-size: 16px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- ENCABEZADO -->
+<header class="header">
+    <div class="logo-container">
+        <div class="logo-icon">🍽️</div>
+        <div class="logo-text">Ricos Piqueos</div>
+    </div>
+    
+    <p class="tagline">🙏 Bendiciones amistades, como todos los días seguimos activos</p>
+    
+    <a href="https://wa.me/51998316544?text=Hola%20Ricos%20Piqueos,%20quiero%20hacer%20un%20pedido" target="_blank" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> 📲 Pedir por WhatsApp
+    </a>
+</header>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="container">
+
+    <!-- CATEGORÍA: PLATOS MARINOS -->
+    <section class="category-section">
+        <div class="category-header">
+            <div class="category-icon">🐟</div>
+            <h2>Platos Marinos Frescos</h2>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d" alt="Ceviche Mixto" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Ceviche Mixto</h3>
+                    <p class="product-desc">Fresco, bien servido y con su respectivo yapeo de sabor. Preparado con los mejores ingredientes del día.</p>
+                    <div class="product-price">Precio cómodo</div>
+                </div>
             </div>
-            <div class="chat-modal-body">
-                <div class="chat-container">
-                    <div class="messages-container" id="messagesContainer">
-                        <div class="message bot-message">
-                            <div class="avatar bot-avatar">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="message-content">
-                                ¡Hola! Soy Edu Assist, tu asistente docente con IA. ¿En qué puedo ayudarte hoy?
-                                <div class="quick-actions">
-                                    <div class="quick-action" onclick="handleQuickAction('Generar planificación')">Generar planificación</div>
-                                    <div class="quick-action" onclick="handleQuickAction('Crear sílabo')">Crear sílabo</div>
-                                    <div class="quick-action" onclick="handleQuickAction('Material visual')">Material visual</div>
-                                    <div class="quick-action" onclick="handleQuickAction('Evaluar competencias')">Evaluar competencias</div>
-                                </div>
-                                <div class="message-time" id="initialMessageTime"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="typing-indicator" id="typingIndicator">
-                        <div class="avatar bot-avatar">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="typing-dots">
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                            <div class="typing-dot"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="input-area">
-                        <div class="input-actions">
-                            <div class="input-action" onclick="attachFile()" title="Adjuntar archivo">
-                                <i class="fas fa-paperclip"></i>
-                            </div>
-                            <div class="input-action" onclick="showCommands()" title="Mostrar comandos">
-                                <i class="fas fa-terminal"></i>
-                            </div>
-                        </div>
-                        
-                        <input type="text" class="message-input" id="messageInput" placeholder="Escribe tu mensaje o pregunta...">
-                        
-                        <button class="send-button" id="sendButton">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947" alt="Filete Blanco y Peje Cabria" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Filete Blanco & Peje Cabria</h3>
+                    <p class="product-desc">Pescado seleccionado, ideal para piqueos y almuerzos. Frescura garantizada.</p>
+                    <div class="product-price">Precio cómodo</div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1553621042-7e4f5de1b9b1" alt="Sudado de Pescado" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Sudado de Pescado</h3>
+                    <p class="product-desc">Calentito, contundente y bien despachado. Perfecto para disfrutar en familia.</p>
+                    <div class="product-price">Precio cómodo</div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1576402187878-974f70c890a5" alt="Fritos Marinos" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Fritos Marinos</h3>
+                    <p class="product-desc">Crujientes, con su papita y cremas. Ideal para acompañar con una cerveza bien helada.</p>
+                    <div class="product-price">Precio cómodo</div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- CATEGORÍA: BEBIDAS Y EXTRAS -->
+    <section class="category-section">
+        <div class="category-header">
+            <div class="category-icon">🍻</div>
+            <h2>Bebidas y Extras</h2>
+        </div>
+        
+        <div class="extras-grid">
+            <div class="extra-item">
+                <div class="extra-icon">🍺</div>
+                <div>
+                    <h3>Cervezas</h3>
+                    <p>Cristal – Pilsen – Cuzqueñas</p>
+                </div>
+            </div>
+            
+            <div class="extra-item">
+                <div class="extra-icon">🧊</div>
+                <div>
+                    <h3>Clarito Helado</h3>
+                    <p>Sale con su cariñito</p>
+                </div>
+            </div>
+            
+            <div class="extra-item">
+                <div class="extra-icon">🥤</div>
+                <div>
+                    <h3>Gaseosas</h3>
+                    <p>Variedad de gaseosas heladas</p>
+                </div>
+            </div>
+            
+            <div class="extra-item">
+                <div class="extra-icon">🚬</div>
+                <div>
+                    <h3>Cigarros</h3>
+                    <p>Disponibles para acompañar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFORMACIÓN DE CONTACTO -->
+    <section class="contact-section">
+        <h2 class="contact-title">📍 ¡Encuéntranos y pide ya!</h2>
+        
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div>
+                    <h3>Ubicación</h3>
+                    <p>Nuevo Horizonte Mz E Lote 1</p>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                <div>
+                    <h3>Teléfono</h3>
+                    <p>📞 998 316 544</p>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                <div>
+                    <h3>Horario</h3>
+                    <p>Atención diaria</p>
+                </div>
+            </div>
+        </div>
+        
+        <h3 style="margin-top: 25px;">Métodos de pago aceptados</h3>
+        <div class="payment-methods">
+            <div class="payment-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="payment-icon">
+                <i class="fas fa-wallet"></i>
+            </div>
+        </div>
+        <p>Yape y Plin</p>
+        
+        <a href="https://wa.me/51998316544?text=Hola%20Ricos%20Piqueos,%20quiero%20hacer%20un%20pedido" target="_blank" class="whatsapp-btn" style="margin-top: 20px;">
+            <i class="fab fa-whatsapp"></i> 🚀 Pedir ahora por WhatsApp
+        </a>
+        
+        <div class="price-tag">
+            💰 PRECIO MUY CÓMODO
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p class="footer-text">🙏 Gracias por su preferencia</p>
+    <p class="footer-text">Atención diaria | Los mejores piqueos marinos</p>
+    
+    <div class="social-icons">
+        <a href="https://wa.me/51998316544" target="_blank" class="social-icon">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+51998316544" class="social-icon">
+            <i class="fas fa-phone"></i>
+        </a>
     </div>
+    
+    <p style="margin-top: 15px; font-size: 14px; color: #aaa;">© 2023 Ricos Piqueos - Todos los derechos reservados</p>
+</footer>
 
-    <script>
-        // ================================
-        // INFORMACIÓN DEL PROYECTO Edu Assist
-        // ================================
-        
-        const projectInfo = {
-            tema: "La Inteligencia Artificial como herramienta para optimizar el tiempo en la planificación curricular docente",
-            problema: "Los docentes invierten una cantidad considerable de tiempo en la elaboración de planificaciones y materiales académicos. Este proceso se realiza de forma manual y tradicional, sin el apoyo de herramientas tecnológicas avanzadas.",
-            causa: "La causa de este comportamiento radica en la falta de capacitación y actualización tecnológica del personal docente.",
-            hipotesis: "Si los docentes del Instituto 'San Agustín' reciben formación sistemática en el uso de herramientas de Inteligencia Artificial, entonces podrán optimizar el tiempo y mejorar la eficiencia en la planificación curricular del Programa de Estudios de Asistencia Administrativa.",
-            solucion: "Implementación de un asistente virtual institucional para la planificación curricular que utiliza inteligencia artificial para generar sesiones educativas alineadas con la normativa educativa vigente en menos de 30 segundos.",
-            equipo: [
-                "RUTH YVANA FLORES GUERRERO",
-                "MARIBEL ELVIRA SALVATIERRA VIZCARDO", 
-                "EDGAR DIAZ AGUILAR",
-                "HAILEY ALEXANDER RIVAS POZO"
-            ],
-            objetivos: {
-                general: "Analizar cómo la inteligencia artificial puede optimizar el tiempo y mejorar la eficiencia en la planificación docente, contribuyendo al fortalecimiento de la innovación pedagógica.",
-                especificos: [
-                    "Identificar las principales dificultades que enfrentan los docentes durante el proceso de planificación educativa.",
-                    "Explorar las herramientas de inteligencia artificial disponibles que pueden aplicarse en la elaboración y gestión de la planificación docente.",
-                    "Diseñar una propuesta de planificación optimizada mediante el uso de inteligencia artificial.",
-                    "Evaluar la percepción y aceptación de los docentes respecto al uso de la inteligencia artificial como apoyo en la planificación.",
-                    "Formular recomendaciones para la integración ética y pedagógica de la IA en los procesos de planificación educativa."
-                ]
-            },
-            entrevistas: {
-                "Luisa Arévalo (52 años)": {
-                    profesion: "Contadora",
-                    experiencia: "15 años",
-                    respuestas: {
-                        tareas: "Las tareas que más tiempo me consumen son la planificación detallada (sesión de clase) y la revisión de trabajos académicos, lo que genera frustración por la sobre carga.",
-                        distribucion: "40% en planificación, 40% en enseñanza y 20 % en evaluación",
-                        informacion: "Valoro la información sobre estilos y ritmos de aprendizaje de los estudiantes para adaptar mejor a las sesiones de aprendizaje",
-                        ia: "La IA podría ser más útil en la organización temporal y en la personalización de contenidos actualizados.",
-                        preferencia: "Prefiero que un asistente de la IA me ofreciera opciones personalizadas para elegir, en lugar de planificaciones automáticas. Siento que perdería el interés de análisis cada información."
-                    }
-                },
-                "Dany Balarezo Ramírez (62 años)": {
-                    profesion: "Contadora", 
-                    experiencia: "36 años",
-                    respuestas: {
-                        tareas: "La parte que más tiempo me toma es la planificación semanal y mensual, porque debo revisar los sílabos, ajustar los contenidos y elaborar materiales manualmente. También la evaluación de los trabajos y llenar los informes administrativos me resulta agotador.",
-                        distribucion: "50% a la planificación, 30% a la enseñanza y 20% a la evaluación",
-                        informacion: "La observación directa de los estudiantes. Ver cómo aprenden, quiénes necesitan más apoyo y quiénes avanzan más rápido. No uso programas tecnológicos, me baso más en la experiencia y el trato diario con ellos.",
-                        ia: "Creo que podría ayudar en la organización del tiempo o tal vez en dar ideas para mejorar materiales. Pero no sabría usarla todavía; necesitaría que me enseñen primero cómo funciona.",
-                        preferencia: "Preferiría que me dé opciones, no que lo haga todo solo. Me gusta tener el control de lo que enseño y asegurarme que esté de acuerdo con el programa oficial."
-                    }
-                },
-                "Violeta Katherine Díaz Silva (35 años)": {
-                    profesion: "Administradora",
-                    experiencia: "2 años", 
-                    respuestas: {
-                        tareas: "Quizá en algunas ocasiones son las correcciones de trabajos y la planificación de algunos temas porque quiero hacerlo más entendible posible y que se adapte a la realidad.",
-                        distribucion: "40% de mi tiempo a la planificación, 40% a la enseñanza directa y 20% a la evaluación y retroalimentación",
-                        informacion: "Considero esencial conocer los niveles de conocimientos previos, el nivel del desempeño, los estilos de aprendizaje y la motivación de los estudiantes. Esa información permite adaptar estrategias y actividades al ritmo de cada grupo.",
-                        ia: "La IA sería especialmente útil en la organización temporal y la generación de propuestas didácticas iniciales, ya que puede agilizar la estructura base de una sesión. Sin embargo, la personalización debe seguir siendo guiada por el criterio humano del docente.",
-                        preferencia: "Preferiría que ofreciera opciones sugeridas, manteniendo siempre el control docente. La IA puede aportar ideas y estructuras, pero la planificación debe conservar el toque humano y contextual."
-                    }
-                }
-            }
-        };
-
-        // ================================
-        // SISTEMA DE ALMACENAMIENTO
-        // ================================
-
-        class StorageSystem {
-            constructor() {
-                this.storageKey = 'eduassist_data';
-                this.defaultData = {
-                    usuario: {
-                        nombre: 'Docente',
-                        institucion: 'Instituto San Agustín'
-                    },
-                    planificaciones: [],
-                    silabos: [],
-                    materiales: [],
-                    evaluaciones: [],
-                    configuracion: {
-                        tema: 'oscuro'
-                    }
-                };
-                this.data = this.loadData();
-            }
-
-            loadData() {
-                try {
-                    const stored = localStorage.getItem(this.storageKey);
-                    if (stored) {
-                        return JSON.parse(stored);
-                    }
-                } catch (e) {
-                    console.error('Error loading data:', e);
-                }
-                return {...this.defaultData};
-            }
-
-            saveData() {
-                try {
-                    localStorage.setItem(this.storageKey, JSON.stringify(this.data));
-                    return true;
-                } catch (e) {
-                    console.error('Error saving data:', e);
-                    return false;
-                }
-            }
-
-            addDocument(tipo, documento) {
-                if (!this.data[tipo]) this.data[tipo] = [];
-                
-                documento.id = Date.now().toString();
-                documento.fechaCreacion = new Date().toISOString();
-                
-                this.data[tipo].push(documento);
-                this.saveData();
-                return documento.id;
-            }
-
-            getDocuments(tipo) {
-                return this.data[tipo] || [];
-            }
-
-            updateUserConfig(config) {
-                this.data.usuario = {...this.data.usuario, ...config};
-                this.saveData();
-            }
-
-            updateAppConfig(config) {
-                this.data.configuracion = {...this.data.configuracion, ...config};
-                this.saveData();
-            }
-        }
-
-        // ================================
-        // SISTEMA DE IA Y GENERACIÓN DE CONTENIDO
-        // ================================
-
-        class AISystem {
-            getPredefinedResponse(prompt) {
-                const lowerPrompt = prompt.toLowerCase();
-                
-                // Respuestas sobre el proyecto Edu Assist
-                if (lowerPrompt.includes('proyecto') || lowerPrompt.includes('edu assist') || lowerPrompt.includes('investigación')) {
-                    return `**Información del Proyecto Edu Assist**
-
-**Tema:** ${projectInfo.tema}
-
-**Problema identificado:** ${projectInfo.problema}
-
-**Causa:** ${projectInfo.causa}
-
-**Hipótesis:** ${projectInfo.hipotesis}
-
-**Solución propuesta:** ${projectInfo.solucion}
-
-**Equipo de trabajo:**
-${projectInfo.equipo.map(miembro => `- ${miembro}`).join('\n')}
-
-**Objetivo general:** ${projectInfo.objetivos.general}
-
-**Objetivos específicos:**
-${projectInfo.objetivos.especificos.map((obj, i) => `${i+1}. ${obj}`).join('\n')}
-
-¿Te gustaría conocer más detalles sobre algún aspecto específico del proyecto?`;
-                }
-                
-                // Respuestas sobre las entrevistas
-                if (lowerPrompt.includes('entrevista') || lowerPrompt.includes('docentes') || lowerPrompt.includes('encuesta')) {
-                    return `**Resumen de las entrevistas a docentes:**
-
-**1. Luisa Arévalo (52 años) - Contadora - 15 años de experiencia**
-- Tareas que consumen más tiempo: ${projectInfo.entrevistas["Luisa Arévalo (52 años)"].respuestas.tareas}
-- Distribución de tiempo: ${projectInfo.entrevistas["Luisa Arévalo (52 años)"].respuestas.distribucion}
-- Preferencia sobre IA: ${projectInfo.entrevistas["Luisa Arévalo (52 años)"].respuestas.preferencia}
-
-**2. Dany Balarezo Ramírez (62 años) - Contadora - 36 años de experiencia**
-- Tareas que consumen más tiempo: ${projectInfo.entrevistas["Dany Balarezo Ramírez (62 años)"].respuestas.tareas}
-- Distribución de tiempo: ${projectInfo.entrevistas["Dany Balarezo Ramírez (62 años)"].respuestas.distribucion}
-- Preferencia sobre IA: ${projectInfo.entrevistas["Dany Balarezo Ramírez (62 años)"].respuestas.preferencia}
-
-**3. Violeta Katherine Díaz Silva (35 años) - Administradora - 2 años de experiencia**
-- Tareas que consumen más tiempo: ${projectInfo.entrevistas["Violeta Katherine Díaz Silva (35 años)"].respuestas.tareas}
-- Distribución de tiempo: ${projectInfo.entrevistas["Violeta Katherine Díaz Silva (35 años)"].respuestas.distribucion}
-- Preferencia sobre IA: ${projectInfo.entrevistas["Violeta Katherine Díaz Silva (35 años)"].respuestas.preferencia}
-
-**Conclusiones generales:**
-Los docentes coinciden en que la planificación consume gran parte de su tiempo y prefieren que la IA ofrezca opciones personalizadas manteniendo el control docente.`;
-                }
-                
-                // Respuestas específicas para comandos comunes
-                if (lowerPrompt.includes('hola') || lowerPrompt.includes('ayuda') || lowerPrompt.includes('ayudame')) {
-                    return `¡Hola! Soy Edu Assist, tu asistente docente. 
-
-Puedo ayudarte con:
-- **Generar planificación**: Diseño de sesiones de clase
-- **Crear sílabo**: Estructura académica oficial  
-- **Material visual**: Presentaciones, infografías, guías
-- **Evaluar competencias**: Rúbricas, pruebas, instrumentos
-- **Capacitación IA**: Aprende a usar IA en educación
-- **Información del proyecto**: Detalles sobre la investigación Edu Assist
-
-¿En qué puedo asistirte específicamente hoy?`;
-                }
-                
-                // Respuestas predefinidas para las 4 funciones principales
-                if (lowerPrompt.includes('planificación') || lowerPrompt.includes('sesión')) {
-                    return `Para crear una planificación curricular efectiva:
-
-**Pasos recomendados:**
-1. **Definir objetivos claros** - Establece qué competencias deben desarrollar los estudiantes
-2. **Seleccionar contenidos** - Elige los temas principales alineados con el currículo nacional
-3. **Diseñar actividades** - Crea experiencias de aprendizaje activas y participativas
-4. **Preparar recursos** - Selecciona materiales y herramientas adecuadas
-5. **Establecer evaluación** - Diseña instrumentos para medir el aprendizaje
-
-**Consejos prácticos:**
-- Considera los diferentes estilos de aprendizaje
-- Incluye actividades variadas (individuales, grupales, prácticas)
-- Adapta el tiempo según la complejidad de los temas
-- Prepara material de apoyo visual
-
-¿Te gustaría que genere una planificación específica para tu clase?`;
-                } else if (lowerPrompt.includes('sílabo') || lowerPrompt.includes('silabo')) {
-                    return `Para elaborar un sílabo académico completo:
-
-**Estructura recomendada:**
-1. **Datos generales del curso** - Nombre, código, créditos, horario
-2. **Competencias a desarrollar** - Habilidades y conocimientos que adquirirán los estudiantes
-3. **Contenidos temáticos** - Unidades y temas organizados secuencialmente
-4. **Metodología de enseñanza** - Estrategias y técnicas pedagógicas
-5. **Sistema de evaluación** - Criterios, instrumentos y porcentajes
-6. **Bibliografía** - Material de consulta básica y complementaria
-7. **Cronograma de actividades** - Distribución temporal de los contenidos
-
-**Consejos:**
-- Alinea con el currículo nacional vigente
-- Especifica criterios de evaluación claros y medibles
-- Incluye diversos recursos educativos (digitales y físicos)
-- Considera diferentes estilos de aprendizaje
-
-¿Necesitas ayuda con algún aspecto específico del sílabo?`;
-                } else if (lowerPrompt.includes('material') || lowerPrompt.includes('visual') || lowerPrompt.includes('recurso')) {
-                    return `Para crear materiales educativos efectivos:
-
-**Tipos de materiales que puedes crear:**
-- Presentaciones interactivas
-- Infografías visuales
-- Guías de estudio
-- Esquemas conceptuales
-- Actividades prácticas
-
-**Recomendaciones:**
-- Usa diseño atractivo y profesional
-- Incluye elementos visuales
-- Adapta al nivel de los estudiantes
-- Promueve la interactividad
-- Considera la accesibilidad
-
-¿Qué tipo de material te gustaría crear?`;
-                } else if (lowerPrompt.includes('evaluación') || lowerPrompt.includes('evaluar') || lowerPrompt.includes('competencias')) {
-                    return `Para diseñar sistemas de evaluación:
-
-**Instrumentos de evaluación:**
-- Rúbricas de evaluación
-- Pruebas escritas
-- Proyectos prácticos
-- Presentaciones orales
-- Portafolios de aprendizaje
-
-**Criterios importantes:**
-- Validez (mide lo que debe medir)
-- Confiabilidad (resultados consistentes)
-- Objetividad (criterios claros)
-- Integralidad (diversos aspectos)
-
-¿Necesitas ayuda con algún tipo específico de evaluación?`;
-                } else if (lowerPrompt.includes('capacitación') || lowerPrompt.includes('ia') || lowerPrompt.includes('inteligencia artificial')) {
-                    return `La capacitación en IA para docentes incluye:
-
-**Módulos disponibles:**
-1. **Introducción a la IA en educación** - Conceptos básicos y aplicaciones
-2. **Herramientas de IA para planificación** - Asistentes virtuales y generadores de contenido
-3. **Evaluación con IA** - Sistemas automatizados de evaluación
-4. **Ética y uso responsable** - Consideraciones importantes para el uso de IA
-
-**Beneficios:**
-- Optimización del tiempo de planificación
-- Personalización del aprendizaje
-- Mejora en la calidad educativa
-- Actualización tecnológica docente
-
-¿Te interesa algún módulo en particular?`;
-                } else {
-                    return `¡Hola! Soy Edu Assist, tu asistente docente. 
-
-Puedo ayudarte con:
-- **Generar planificación**: Diseño de sesiones de clase
-- **Crear sílabo**: Estructura académica oficial
-- **Material visual**: Presentaciones, infografías, guías
-- **Evaluar competencias**: Rúbricas, pruebas, instrumentos
-- **Capacitación IA**: Aprende a usar IA en educación
-- **Información del proyecto**: Detalles sobre la investigación Edu Assist
-
-¿En qué puedo asistirte específicamente hoy?`;
-                }
-            }
-        }
-
-        // ================================
-        // SISTEMA DE CHATBOT INTELIGENTE
-        // ================================
-
-        class Chatbot {
-            constructor() {
-                this.aiSystem = new AISystem();
-                this.conversationHistory = [];
-            }
-
-            async processMessage(message) {
-                // Agregar mensaje del usuario al historial
-                this.conversationHistory.push({ role: 'user', content: message });
-                
-                // Mostrar indicador de escritura
-                showTypingIndicator();
-                
-                try {
-                    // Simular tiempo de procesamiento
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    
-                    // Obtener respuesta de IA
-                    const response = this.aiSystem.getPredefinedResponse(message);
-                    
-                    // Agregar respuesta al historial
-                    this.conversationHistory.push({ role: 'assistant', content: response });
-                    
-                    return response;
-                } catch (error) {
-                    console.error('Error en el chatbot:', error);
-                    return "Lo siento, ha ocurrido un error. Por favor, intenta nuevamente.";
-                } finally {
-                    hideTypingIndicator();
-                }
-            }
-
-            getQuickActions(message) {
-                const lowerMessage = message.toLowerCase();
-                
-                if (lowerMessage.includes('proyecto') || lowerMessage.includes('edu assist') || lowerMessage.includes('investigación')) {
-                    return ["Ver objetivos", "Conocer equipo", "Ver entrevistas"];
-                } else if (lowerMessage.includes('planificación') || lowerMessage.includes('sesión')) {
-                    return ["Generar planificación", "Ver ejemplos", "Configurar duración"];
-                } else if (lowerMessage.includes('sílabo') || lowerMessage.includes('silabo')) {
-                    return ["Crear sílabo", "Estructura oficial", "Competencias"];
-                } else if (lowerMessage.includes('material') || lowerMessage.includes('visual')) {
-                    return ["Diseñar presentación", "Crear infografía", "Generar actividad"];
-                } else if (lowerMessage.includes('capacitación') || lowerMessage.includes('ia')) {
-                    return ["Ver módulos", "Inscribirme", "Recursos adicionales"];
-                } else if (lowerMessage.includes('evaluación') || lowerMessage.includes('evaluar')) {
-                    return ["Crear rúbrica", "Diseñar examen", "Lista de cotejo"];
-                }
-                
-                return ["Generar planificación", "Crear sílabo", "Material visual", "Evaluar competencias", "Información del proyecto"];
-            }
-        }
-
-        // ================================
-        // INICIALIZACIÓN DE SISTEMAS
-        // ================================
-
-        const storageSystem = new StorageSystem();
-        const chatbot = new Chatbot();
-        let currentUser = null;
-
-        // ================================
-        // INTERFAZ DE USUARIO
-        // ================================
-
-        // Elementos del DOM
-        const loginModal = document.getElementById('loginModal');
-        const loginButton = document.getElementById('loginButton');
-        const userInfo = document.getElementById('userInfo');
-        const userNameDisplay = document.getElementById('userNameDisplay');
-        
-        const messagesContainer = document.getElementById('messagesContainer');
-        const messageInput = document.getElementById('messageInput');
-        const sendButton = document.getElementById('sendButton');
-        const typingIndicator = document.getElementById('typingIndicator');
-        
-        // Elementos del modal de chat
-        const chatFloatingBtn = document.getElementById('chatFloatingBtn');
-        const chatModal = document.getElementById('chatModal');
-        const closeChatBtn = document.getElementById('closeChatBtn');
-
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeSystem();
-            
-            // Configurar hora del mensaje inicial
-            document.getElementById('initialMessageTime').textContent = new Date().toLocaleTimeString('es-ES', { 
-                hour: '2-digit', minute: '2-digit' 
-            });
-
-            // Inicializar el sistema de scroll del chat
-            initializeChatScroll();
-            
-            // Verificar si el usuario ya está logueado
-            checkLoginStatus();
-        });
-
-        function initializeSystem() {
-            // Configurar evento de login
-            loginButton.addEventListener('click', handleLogin);
-            
-            // Configurar evento de enter en campos de login
-            document.getElementById('loginPassword').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    handleLogin();
-                }
-            });
-            
-            // Configurar navegación entre módulos
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const module = this.getAttribute('data-module');
-                    switchModule(module);
-                });
-            });
-            
-            // Configurar chat
-            sendButton.addEventListener('click', processUserInput);
-            messageInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    processUserInput();
-                }
-            });
-
-            // Configurar modal de chat
-            chatFloatingBtn.addEventListener('click', function() {
-                chatModal.style.display = 'flex';
-                messageInput.focus();
-                // Forzar scroll al fondo cuando se abre el modal
-                setTimeout(scrollToBottom, 100);
-            });
-
-            closeChatBtn.addEventListener('click', function() {
-                chatModal.style.display = 'none';
-            });
-
-            // Cerrar modal al hacer clic fuera
-            chatModal.addEventListener('click', function(e) {
-                if (e.target === chatModal) {
-                    chatModal.style.display = 'none';
-                }
-            });
-        }
-
-        // ================================
-        // SISTEMA DE LOGIN
-        // ================================
-
-        function checkLoginStatus() {
-            const userData = storageSystem.data.usuario;
-            if (userData && userData.nombre) {
-                // Usuario ya está logueado
-                currentUser = userData;
-                hideLoginModal();
-                showUserInfo();
-            } else {
-                // Mostrar modal de login
-                showLoginModal();
-            }
-        }
-
-        function handleLogin() {
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            if (username && password) {
-                // Simular autenticación
-                if (username === 'docente' && password === 'password') {
-                    currentUser = {
-                        username: username,
-                        nombre: 'Docente',
-                        institucion: 'Instituto San Agustín'
-                    };
-                    
-                    // Actualizar datos de usuario
-                    storageSystem.updateUserConfig({
-                        nombre: currentUser.nombre,
-                        institucion: currentUser.institucion
-                    });
-                    
-                    // Ocultar modal de login y mostrar información del usuario
-                    hideLoginModal();
-                    showUserInfo();
-                    
-                    showNotification('Sesión iniciada correctamente', 'success');
-                } else {
-                    showNotification('Usuario o contraseña incorrectos', 'error');
-                }
-            } else {
-                showNotification('Por favor, completa todos los campos', 'error');
-            }
-        }
-
-        function logout() {
-            currentUser = null;
-            storageSystem.updateUserConfig({
-                nombre: '',
-                institucion: ''
-            });
-            showLoginModal();
-            hideUserInfo();
-            showNotification('Sesión cerrada correctamente', 'info');
-        }
-
-        function showLoginModal() {
-            loginModal.style.display = 'flex';
-        }
-
-        function hideLoginModal() {
-            loginModal.style.display = 'none';
-        }
-
-        function showUserInfo() {
-            userInfo.style.display = 'flex';
-            userNameDisplay.textContent = currentUser.nombre;
-        }
-
-        function hideUserInfo() {
-            userInfo.style.display = 'none';
-        }
-
-        // ================================
-        // CORRECCIÓN DEL SCROLL
-        // ================================
-        
-        function initializeChatScroll() {
-            const chatModal = document.getElementById('chatModal');
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                        const displayStyle = chatModal.style.display;
-                        if (displayStyle === 'flex') {
-                            // Pequeño retraso para asegurar que el modal está completamente renderizado
-                            setTimeout(scrollToBottom, 100);
-                        }
-                    }
-                });
-            });
-            
-            observer.observe(chatModal, {
-                attributes: true,
-                attributeFilter: ['style']
-            });
-        }
-
-        function scrollToBottom() {
-            const messagesContainer = document.getElementById('messagesContainer');
-            // Usamos requestAnimationFrame para asegurar que el DOM se ha actualizado
-            requestAnimationFrame(() => {
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            });
-        }
-
-        // ================================
-        // CHATBOT INTERACTIVO
-        // ================================
-
-        async function processUserInput() {
-            const userInput = messageInput.value.trim();
-            if (!userInput) return;
-
-            addUserMessage(userInput);
-            messageInput.value = '';
-
-            try {
-                const response = await chatbot.processMessage(userInput);
-                const quickActions = chatbot.getQuickActions(userInput);
-                
-                addBotMessage(response, quickActions);
-            } catch (error) {
-                console.error('Error en processUserInput:', error);
-                addBotMessage("Lo siento, ha ocurrido un error. Por favor, intenta nuevamente.");
-            }
-        }
-
-        function addUserMessage(text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message user-message';
-            
-            messageDiv.innerHTML = `
-                <div class="message-content">
-                    ${escapeHtml(text)}
-                    <div class="message-time">${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</div>
-                </div>
-                <div class="avatar user-avatar">
-                    <i class="fas fa-user"></i>
-                </div>
-            `;
-            
-            messagesContainer.appendChild(messageDiv);
-            
-            // Forzar el scroll después de que el mensaje se haya agregado al DOM
-            setTimeout(scrollToBottom, 50);
-        }
-
-        function addBotMessage(text, quickActions = []) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message bot-message';
-            
-            let quickActionsHTML = '';
-            if (quickActions && quickActions.length > 0) {
-                quickActionsHTML = `
-                    <div class="quick-actions">
-                        ${quickActions.map(action => 
-                            `<div class="quick-action" onclick="handleQuickAction('${escapeHtml(action)}')">${escapeHtml(action)}</div>`
-                        ).join('')}
-                    </div>
-                `;
-            }
-            
-            messageDiv.innerHTML = `
-                <div class="avatar bot-avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="message-content">
-                    ${formatMessage(text)}
-                    ${quickActionsHTML}
-                    <div class="message-time">${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</div>
-                </div>
-            `;
-            
-            messagesContainer.appendChild(messageDiv);
-            
-            // Forzar el scroll después de que el mensaje se haya agregado al DOM
-            setTimeout(scrollToBottom, 50);
-        }
-
-        function formatMessage(text) {
-            // Convertir saltos de línea a <br>
-            text = text.replace(/\n/g, '<br>');
-            
-            // Convertir **texto** a <strong>texto</strong>
-            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            
-            // Convertir - elemento a lista
-            text = text.replace(/^- (.*?)(?=<br>|$)/gm, '<li>$1</li>');
-            text = text.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-            
-            return text;
-        }
-
-        function handleQuickAction(action) {
-            const actions = {
-                'Generar planificación': () => generatePlanificacion(),
-                'Crear sílabo': () => generateSilabo(),
-                'Material visual': () => generateMaterial(),
-                'Evaluar competencias': () => generateEvaluacion(),
-                'Información del proyecto': () => {
-                    messageInput.value = 'proyecto';
-                    processUserInput();
-                },
-                'Ver objetivos': () => {
-                    addBotMessage(`**Objetivos del Proyecto Edu Assist**
-
-**Objetivo general:**
-${projectInfo.objetivos.general}
-
-**Objetivos específicos:**
-${projectInfo.objetivos.especificos.map((obj, i) => `${i+1}. ${obj}`).join('<br>')}`);
-                },
-                'Conocer equipo': () => {
-                    addBotMessage(`**Equipo de trabajo Edu Assist:**
-${projectInfo.equipo.map(miembro => `• ${miembro}`).join('<br>')}`);
-                },
-                'Ver entrevistas': () => {
-                    messageInput.value = 'entrevistas';
-                    processUserInput();
-                },
-                'Capacitación IA': () => {
-                    showNotification('Redirigiendo a la sección de capacitación', 'info');
-                }
-            };
-            
-            if (actions[action]) {
-                actions[action]();
-            } else {
-                // Si no es una acción predefinida, tratarla como entrada de usuario
-                messageInput.value = action;
-                processUserInput();
-            }
-        }
-
-        function showTypingIndicator() {
-            typingIndicator.style.display = 'flex';
-            scrollToBottom();
-        }
-
-        function hideTypingIndicator() {
-            typingIndicator.style.display = 'none';
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // ================================
-        // FUNCIONALIDADES ADICIONALES
-        // ================================
-
-        function attachFile() {
-            showNotification('Funcionalidad de adjuntar archivo en desarrollo', 'info');
-        }
-
-        function showCommands() {
-            messageInput.value = '/';
-            messageInput.focus();
-        }
-
-        function showNotification(mensaje, tipo = 'info') {
-            // Crear notificación
-            const notification = document.createElement('div');
-            notification.className = `notification ${tipo}`;
-            notification.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-${tipo === 'success' ? 'check-circle' : tipo === 'warning' ? 'exclamation-triangle' : tipo === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                    <span>${mensaje}</span>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remover después de 5 segundos
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
-            }, 5000);
-        }
-
-        // Funciones para los módulos principales
-        function generatePlanificacion() {
-            showNotification('Generando planificación curricular...', 'info');
-            addBotMessage(`
-                <h3>Planificación Curricular Generada</h3>
-                <p>He creado una planificación completa para tu clase. Incluye:</p>
-                <ul>
-                    <li><strong>Objetivos de aprendizaje</strong> claramente definidos</li>
-                    <li><strong>Actividades</strong> variadas y participativas</li>
-                    <li><strong>Recursos</strong> adecuados para el tema</li>
-                    <li><strong>Evaluación</strong> formativa y sumativa</li>
-                </ul>
-                <p>¿Te gustaría personalizar algún aspecto específico de esta planificación?</p>
-            `, ["Personalizar objetivos", "Modificar actividades", "Cambiar recursos", "Ajustar evaluación"]);
-        }
-
-        function generateSilabo() {
-            showNotification('Generando sílabo académico...', 'info');
-            addBotMessage(`
-                <h3>Sílabo Académico Generado</h3>
-                <p>He creado un sílabo completo con la estructura oficial. Incluye:</p>
-                <ul>
-                    <li><strong>Datos generales</strong> del curso</li>
-                    <li><strong>Competencias</strong> a desarrollar</li>
-                    <li><strong>Contenidos temáticos</strong> organizados</li>
-                    <li><strong>Metodología</strong> de enseñanza</li>
-                    <li><strong>Sistema de evaluación</strong> detallado</li>
-                    <li><strong>Bibliografía</strong> recomendada</li>
-                </ul>
-                <p>¿Qué aspecto del sílabo te gustaría ajustar?</p>
-            `, ["Modificar competencias", "Cambiar contenidos", "Ajustar evaluación", "Actualizar bibliografía"]);
-        }
-
-        function generateMaterial() {
-            showNotification('Generando material visual...', 'info');
-            addBotMessage(`
-                <h3>Material Visual Generado</h3>
-                <p>He creado material educativo visual atractivo. Incluye:</p>
-                <ul>
-                    <li><strong>Presentación</strong> con diseño profesional</li>
-                    <li><strong>Infografías</strong> con información clave</li>
-                    <li><strong>Esquemas</strong> para facilitar la comprensión</li>
-                    <li><strong>Actividades</strong> visuales para los estudiantes</li>
-                </ul>
-                <p>¿Qué tipo de material te gustaría ajustar o crear adicionalmente?</p>
-            `, ["Modificar presentación", "Crear más infografías", "Diseñar actividades", "Generar guía visual"]);
-        }
-
-        function generateEvaluacion() {
-            showNotification('Generando instrumento de evaluación...', 'info');
-            addBotMessage(`
-                <h3>Evaluación de Competencias Generada</h3>
-                <p>He creado un sistema de evaluación completo. Incluye:</p>
-                <ul>
-                    <li><strong>Rúbricas</strong> de evaluación detalladas</li>
-                    <li><strong>Pruebas</strong> con diferentes tipos de preguntas</li>
-                    <li><strong>Listas de cotejo</strong> para evaluar procesos</li>
-                    <li><strong>Instrumentos</strong> para evaluación formativa</li>
-                </ul>
-                <p>¿Qué aspecto del sistema de evaluación te gustaría ajustar?</p>
-            `, ["Modificar rúbricas", "Cambiar pruebas", "Ajustar criterios", "Personalizar instrumentos"]);
-        }
-
-        // ================================
-        // NAVEGACIÓN ENTRE MÓDULOS
-        // ================================
-
-        function switchModule(module) {
-            // Ocultar todos los paneles
-            document.querySelectorAll('.module-panel').forEach(panel => {
-                panel.classList.remove('active');
-            });
-            
-            // Mostrar el panel seleccionado
-            document.getElementById(`${module}-panel`).classList.add('active');
-            
-            // Actualizar título del módulo
-            const titles = {
-                dashboard: 'Dashboard Principal',
-                planificacion: 'Planificación Curricular',
-                silabos: 'Gestión de Sílabos',
-                materiales: 'Materiales Educativos',
-                evaluacion: 'Evaluación de Competencias',
-                capacitacion: 'Capacitación en IA',
-                configuracion: 'Configuración'
-            };
-            
-            document.getElementById('moduleTitle').textContent = titles[module] || 'Edu Assist';
-            
-            // Actualizar navegación activa
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            document.querySelector(`.nav-item[data-module="${module}"]`).classList.add('active');
-        }
-
-        // ================================
-        // SMOOTH SCROLLING Y MENÚ MÓVIL
-        // ================================
-
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('main-nav').classList.toggle('active');
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    document.getElementById('main-nav').classList.remove('active');
-                }
-            });
-        });
-
-        // Add active class to navigation links based on scroll position
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('nav a');
-            
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if(pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if(link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
