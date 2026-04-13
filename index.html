@@ -217,26 +217,49 @@
             text-align: left;
             font-weight: 600;
         }
+        /* ÚNICA MODIFICACIÓN: vertical-align cambiado de top a middle para alinear correctamente el texto */
         .risk-table td {
             padding: 12px 12px;
             border-bottom: 1px solid #eef2f6;
-            vertical-align: top;
+            vertical-align: middle;
         }
-        .img-placeholder {
-            width: 60px;
-            height: 60px;
-            background: #f0f2f5;
-            border-radius: 12px;
+        /* Estilo evidencia icono + texto */
+        .evidencia-icon {
+            width: 70px;
+            height: 70px;
+            background: #fef3e8;
+            border-radius: 16px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #8a9bb0;
-            font-size: 24px;
-            border: 1px dashed #cbd5e1;
+            text-align: center;
+            font-size: 10px;
+            color: #b75a1c;
+            border: 1px solid #ffd8b5;
             transition: 0.2s;
         }
-        .img-placeholder:hover {
-            background: #e2e8f0;
+        .evidencia-icon i {
+            font-size: 28px;
+            margin-bottom: 5px;
+            color: #e67e22;
+        }
+        .evidencia-icon:hover {
+            background: #ffe6d5;
+            transform: scale(1.02);
+        }
+        /* Estilo para imágenes reales */
+        .evidencia-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid #ffd8b5;
+            transition: 0.2s;
+        }
+        .evidencia-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .badge-pendiente {
             background-color: #f0f2f5;
@@ -259,6 +282,8 @@
             .cover h1 { font-size: 32px; }
             .sede-block { margin: 20px; }
             .sede-header h2 { font-size: 20px; }
+            .evidencia-icon, .evidencia-img { width: 55px; height: 55px; font-size: 8px; }
+            .evidencia-icon i { font-size: 22px; }
         }
     </style>
 </head>
@@ -303,7 +328,7 @@
         </div>
     </div>
 
-    <!-- ==================== SEDES ORDENADAS A - Z ==================== -->
+    <!-- ==================== SEDES ==================== -->
 
     <!-- 1. UTP Almacén Central -->
     <div class="sede-block">
@@ -313,31 +338,116 @@
             <table class="risk-table">
                 <thead><tr><th>Descripción del riesgo</th><th>Medida recomendada</th><th>Fecha corrección</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Caseta de madera, vidrio simple, equipos valorizados expuestos</td><td>Reemplazar por estructura sólida, vidrio templado</td><td>27.08.2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: caseta_madera_almacen.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Manojo de llaves sin custodia en caseta</td><td>Protocolo de custodia, caja fuerte, doble firma</td><td>27.08.2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: llaves_sin_custodia.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puerta principal con chapa simple</td><td>Cerradura alta seguridad + control electrónico</td><td>27.08.2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_chapa_simple_almacen.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Falta pulsador de pánico en caseta</td><td>Instalar pulsador conectado a central de monitoreo</td><td>27.08.2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: pulsador_faltante_almacen.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Caseta de madera, vidrio simple, equipos valorizados expuestos
+                        <td>Reemplazar por estructura sólida, vidrio templado
+                        <td>27.08.2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-hard-hat"></i><span>Caseta frágil</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Manojo de llaves sin custodia en caseta
+                        <td>Protocolo de custodia, caja fuerte, doble firma
+                        <td>27.08.2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-key"></i><span>Llaves expuestas</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puerta principal con chapa simple
+                        <td>Cerradura alta seguridad + control electrónico
+                        <td>27.08.2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-lock"></i><span>Chapa simple</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Falta pulsador de pánico en caseta
+                        <td>Instalar pulsador conectado a central de monitoreo
+                        <td>27.08.2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-bell"></i><span>Sin pulsador</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 2. UTP Arequipa – Parra I -->
+    <!-- 2. UTP Arequipa – Parra I (con imagen real agregada) -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-university"></i><h2>UTP Arequipa – Parra I</h2><div class="badge-alto-count">8 riesgos ALTOS</div></div>
         <div class="sede-context">Puerta principal sin arco detector, bóveda sin cerco eléctrico, pasajes vulnerables, comedor sin CCTV, salida vehicular sin semáforos, etc.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Foto</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Puerta principal sin arco detector (riesgo ingreso armas)</td><td>Instalar arco detector tipo scanner</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: arco_detector_parraI.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Bóveda sin cerco eléctrico, colindante restaurante/eventos</td><td>Cerco eléctrico, sensores, patrullaje nocturno</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: boveda_parraI.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Pasaje Martínez alta afluencia, vulnerabilidad perimetral</td><td>Sensores de movimiento, mantener cerco eléctrico</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: pasaje_martinez.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Pasaje hacia bóveda sin cerco eléctrico</td><td>Instalar cerco eléctrico, sensores, CCTV</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: pasaje_boveda_parraI.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Comedor C sin cámaras ni sensores de movimiento</td><td>Sensores de movimiento, evaluar CCTV</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: comedor_c_parraI.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Salida vehicular sin semáforos digitales de control</td><td>Instalar semáforos digitales con control remoto</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: salida_vehicular_parraI.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Estructura tipo escalera sin sensores (acceso a bóveda)</td><td>Sensores de movimiento integrados a alarma</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: escalera_boveda_parraI.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Intersección Pasajes sin seguridad perimetral</td><td>Cerco eléctrico, sensores, CCTV permanente</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: interseccion_pasajes.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <td>
+                        <td>Puerta principal sin arco detector (riesgo ingreso armas)
+                        <td>Instalar arco detector tipo scanner
+                        <td>15/08/2026
+                        <td>Cliente
+                        <!-- IMAGEN REAL AGREGADA AQUÍ -->
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/Y0bg7BdB/image.png" alt="Arco detector faltante" title="Puerta principal sin arco detector">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Bóveda sin cerco eléctrico, colindante restaurante/eventos
+                        <td>Cerco eléctrico, sensores, patrullaje nocturno
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/qv0c904r/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Pasaje Martínez alta afluencia, vulnerabilidad perimetral
+                        <td>Sensores de movimiento, mantener cerco eléctrico
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/DwxTGvz7/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Pasaje hacia bóveda sin cerco eléctrico
+                        <td>Instalar cerco eléctrico, sensores, CCTV
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/k4rh6zKk/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Comedor C sin cámaras ni sensores de movimiento
+                        <td>Sensores de movimiento, evaluar CCTV
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/cCtH9KrB/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Salida vehicular sin semáforos digitales de control
+                        <td>Instalar semáforos digitales con control remoto
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/0NrbMHPh/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Estructura tipo escalera sin sensores (acceso a bóveda)
+                        <td>Sensores de movimiento integrados a alarma
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/SsfFykHh/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </td>
+                    <tr>
+                        <td>Intersección Pasajes sin seguridad perimetral
+                        <td>Cerco eléctrico, sensores, CCTV permanente
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/rs793tgq/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -351,12 +461,54 @@
             <table class="risk-table">
                 <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Perímetro salida Av. Luna Pizarro sin cerco eléctrico</td><td>Instalar cerco eléctrico y sensores de movimiento</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: salida_luna_pizarro.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Barandas de vidrio área médica sin lámina de seguridad</td><td>Instalar lámina de seguridad antivandálica</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: barandas_vidrio_medica.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Área colindante con vecino sin cerco eléctrico ni sensores</td><td>Cerco eléctrico, sensores, CCTV</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: colindante_vecino_parraII.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Interior colindante terreno vacío sin cerco eléctrico</td><td>Cerco eléctrico, sensores, iluminación reforzada</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: terreno_vacio_parraII.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puerta de ingreso de emergencia sin sensores de movimiento</td><td>Sensores + alarma sonora ante apertura no autorizada</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_emergencia_parraII.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puerta de ingreso sin arco detector</td><td>Instalar arco detector con protocolo de revisión</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: arco_detector_parraII.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Perímetro salida Av. Luna Pizarro sin cerco eléctrico
+                        <td>Instalar cerco eléctrico y sensores de movimiento
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/nLQ9Swgk/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Barandas de vidrio área médica sin lámina de seguridad
+                        <td>Instalar lámina de seguridad antivandálica
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/NfSH8cPG/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Área colindante con vecino sin cerco eléctrico ni sensores
+                        <td>Cerco eléctrico, sensores, CCTV
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/RhhsmQwT/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Interior colindante terreno vacío sin cerco eléctrico
+                        <td>Cerco eléctrico, sensores, iluminación reforzada
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/RF6dbVmP/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puerta de ingreso de emergencia sin sensores de movimiento
+                        <td>Sensores + alarma sonora ante apertura no autorizada
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/K8Wgp780/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puerta de ingreso sin arco detector
+                        <td>Instalar arco detector con protocolo de revisión
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/9X10NPxZ/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -368,14 +520,56 @@
         <div class="sede-context">Perímetros sin cerco eléctrico, muros bajos, ventanas sin protección.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Foto</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Perímetro Av. Tacna sin cerco eléctrico, baja altura</td><td>Instalar cerco eléctrico, sensores, CCTV nocturna</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: av_tacna_perimetro.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Perímetro Av. Tacna (muro bajo) sin cerco eléctrico</td><td>Refuerzo del muro + cerco eléctrico</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: muro_bajo_tacna.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Perímetro Calle Hidalgo sin cerco eléctrico ni sensores</td><td>Cerco eléctrico, sensores, rondas de vigilancia</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: calle_hidalgo.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Ventanas sin protección física ni sensores de movimiento</td><td>Protección en ventanas + sensores conectados a alarma</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: ventanas_sin_proteccion.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Ventanas con visibilidad directa a equipos laboratorio, sin rejas</td><td>Rejas, sensores, cámaras orientadas</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: ventanas_laboratorio.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puertas y ventanas de vidrio sin protección (Calle Quiroz)</td><td>Rejas, mallas de protección, sensores, cámaras</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puertas_vidrio_quiroz.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Perímetro Av. Tacna sin cerco eléctrico, baja altura
+                        <td>Instalar cerco eléctrico, sensores, CCTV nocturna
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><img class="evidencia-img" src="https://i.postimg.cc/0ykLXmBS/image.png">
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Perímetro Av. Tacna (muro bajo) sin cerco eléctrico
+                        <td>Refuerzo del muro + cerco eléctrico
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-wall"></i><span>Muro bajo</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Perímetro Calle Hidalgo sin cerco eléctrico ni sensores
+                        <td>Cerco eléctrico, sensores, rondas de vigilancia
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-street-view"></i><span>Calle Hidalgo</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Ventanas sin protección física ni sensores de movimiento
+                        <td>Protección en ventanas + sensores conectados a alarma
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-window-maximize"></i><span>Ventanas sin protección</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Ventanas con visibilidad directa a equipos laboratorio, sin rejas
+                        <td>Rejas, sensores, cámaras orientadas
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-flask"></i><span>Laboratorio expuesto</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puertas y ventanas de vidrio sin protección (Calle Quiroz)
+                        <td>Rejas, mallas de protección, sensores, cámaras
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-store"></i><span>Calle Quiroz</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -387,42 +581,189 @@
         <div class="sede-context">Puerta de ingreso sin vidrio templado ni sensores, ingreso superior sin cerco eléctrico, mamparas frágiles.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th><tr></thead>
                 <tbody>
-                    <tr><td>Puerta de ingreso sin vidrio templado, micas ni sensores</td><td>Instalar vidrio templado o micas, sensores de movimiento</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_ingreso_postgrado.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Ingreso zona superior sin cerco eléctrico</td><td>Instalar cerco eléctrico perimetral, iluminación reforzada</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: ingreso_superior_postgrado.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Mamparas pisos 2,3,4 frágiles, acceso fácil a otra sede</td><td>Reforzar mamparas, cerraduras electrónicas, sensores, CCTV</td><td>15/08/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: mamparas_fragiles_postgrado.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Puerta de ingreso sin vidrio templado, micas ni sensores
+                        <td>Instalar vidrio templado o micas, sensores de movimiento
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-glass-cheers"></i><span>Vidrio simple</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Ingreso zona superior sin cerco eléctrico
+                        <td>Instalar cerco eléctrico perimetral, iluminación reforzada
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-arrow-up"></i><span>Zona superior</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Mamparas pisos 2,3,4 frágiles, acceso fácil a otra sede
+                        <td>Reforzar mamparas, cerraduras electrónicas, sensores, CCTV
+                        <td>15/08/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-door-closed"></i><span>Mamparas frágiles</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 6. UTP Ate (Santa Clara) – 18 hallazgos ALTOS -->
+    <!-- 6. UTP Ate (Santa Clara) – 18 hallazgos -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-tree"></i><h2>UTP Ate (Santa Clara)</h2><div class="badge-alto-count">18 riesgos ALTOS</div></div>
         <div class="sede-context">Múltiples vulnerabilidades: estaciones manuales sin protectores, ductos deteriorados, rejillas desviadas, huecos en jardinería, escaleras sin antideslizantes, luminarias en mal estado, zona segura obstruida, falta tope altura, bordes afilados, falta CCTV en ingreso, enchufes sin protectores, barandas inseguras, portones sin sensores, desnivel sin baranda, aula con pared vidrio sin barandal, mamparas sin lámina, muro sin cerco eléctrico.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Imagen</th><th>Status</th></tr></thead>
+                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Estaciones manuales de emergencia sin protectores</td><td>Instalar protectores transparentes, inspección periódica</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: estaciones_manuales_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Ducto ventilación varillas deterioradas por apoyo de personas</td><td>Reparación, refuerzo estructural, señalización</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: ducto_ventilacion_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Rejillas de piso desviadas, riesgo de tropiezos</td><td>Reposición, nivelación, fijación segura</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: rejillas_piso_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Hueco abierto en jardinería sin cobertura</td><td>Cubrir con tapa resistente, señalizar</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: hueco_jardineria_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Escaleras metálicas sin antideslizantes (riesgo resbalones)</td><td>Instalar bandas antideslizantes en cada peldaño</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: escaleras_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Luminarias escaleras deterioradas, suciedad, riesgo desprendimiento</td><td>Mantenimiento, limpieza, revisión de sujeciones</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: luminarias_escaleras_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Zona segura (columna) obstruida por módulo</td><td>Retirar o reubicar módulo, reforzar señalización</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: zona_segura_obstruida_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Acceso vehicular sin tope limitador de altura</td><td>Instalar pórtico o barra física, señalización</td><td>29/05/2026</td><td>Cliente/Lider Zonal</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: tope_altura_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Bordes de jardinería afilados, riesgo cortes/caídas</td><td>Recubrimiento redondeado, señalización preventiva</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: bordes_jardineria_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Ingreso principal sin cámaras CCTV, garita sin cobertura</td><td>Instalar cámaras en ingreso y garita, buena resolución</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: cctv_ingreso_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Enchufes áreas comunes sin protectores (riesgo eléctrico)</td><td>Protectores de seguridad, señalización, concientización</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: enchufes_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Barandas de pisos con altura media, facilitan escalamiento</td><td>Adecuar altura, mallas de seguridad, señalización</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: barandas_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Portones automáticos sin sensores de proximidad</td><td>Instalar sensores, fotoceldas, sistemas antiaplastamiento</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: portones_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Desnivel pronunciado en jardinería hacia estacionamiento sin baranda</td><td>Instalar baranda o contención, delimitación</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: desnivel_jardineria_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Aula piso 6 con pared de vidrio sin barandal</td><td>Barandal metálico, vidrio laminado, señalización</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: aula_vidrio_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Escaleras y descansos con elementos para escalar</td><td>Adecuar infraestructura, mallas de seguridad</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: escaleras_riesgo_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Mamparas de vidrio sin lámina de seguridad (hall, auditorio, comedor, tópico)</td><td>Instalar lámina de seguridad certificada</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: mamparas_vidrio_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Muro perimetral lado izquierdo salida vehicular sin cerco eléctrico</td><td>Instalar cerco eléctrico y sensores de intrusión</td><td>29/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: muro_perimetral_ate.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Estaciones manuales de emergencia sin protectores
+                        <td>Instalar protectores transparentes, inspección periódica
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-hand-paper"></i><span>Estación sin protector</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Ducto ventilación varillas deterioradas por apoyo de personas
+                        <td>Reparación, refuerzo estructural, señalización
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-wind"></i><span>Ducto dañado</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Rejillas de piso desviadas, riesgo de tropiezos
+                        <td>Reposición, nivelación, fijación segura
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-grid"></i><span>Rejilla desviada</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Hueco abierto en jardinería sin cobertura
+                        <td>Cubrir con tapa resistente, señalizar
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-hole"></i><span>Hueco peligroso</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Escaleras metálicas sin antideslizantes (riesgo resbalones)
+                        <td>Instalar bandas antideslizantes en cada peldaño
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-stairs"></i><span>Sin antideslizante</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Luminarias escaleras deterioradas, suciedad, riesgo desprendimiento
+                        <td>Mantenimiento, limpieza, revisión de sujeciones
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-lightbulb"></i><span>Luminaria mala</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Zona segura (columna) obstruida por módulo
+                        <td>Retirar o reubicar módulo, reforzar señalización
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-chair"></i><span>Zona segura obstruida</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Acceso vehicular sin tope limitador de altura
+                        <td>Instalar pórtico o barra física, señalización
+                        <td>29/05/2026
+                        <td>Cliente/Lider Zonal
+                        <td><div class="evidencia-icon"><i class="fas fa-truck"></i><span>Sin tope altura</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Bordes de jardinería afilados, riesgo cortes/caídas
+                        <td>Recubrimiento redondeado, señalización preventiva
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-cut"></i><span>Bordes afilados</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Ingreso principal sin cámaras CCTV, garita sin cobertura
+                        <td>Instalar cámaras en ingreso y garita, buena resolución
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-video"></i><span>Sin CCTV</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Enchufes áreas comunes sin protectores (riesgo eléctrico)
+                        <td>Protectores de seguridad, señalización, concientización
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-plug"></i><span>Enchufe sin protector</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Barandas de pisos con altura media, facilitan escalamiento
+                        <td>Adecuar altura, mallas de seguridad, señalización
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-hand-peace"></i><span>Baranda baja</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Portones automáticos sin sensores de proximidad
+                        <td>Instalar sensores, fotoceldas, sistemas antiaplastamiento
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-gate"></i><span>Portón sin sensor</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </td>
+                    <tr>
+                        <td>Desnivel pronunciado en jardinería hacia estacionamiento sin baranda
+                        <td>Instalar baranda o contención, delimitación
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-mountain"></i><span>Desnivel peligroso</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Aula piso 6 con pared de vidrio sin barandal
+                        <td>Barandal metálico, vidrio laminado, señalización
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-school"></i><span>Vidrio sin barandal</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Escaleras y descansos con elementos para escalar
+                        <td>Adecuar infraestructura, mallas de seguridad
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-child"></i><span>Punto de escalada</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Mamparas de vidrio sin lámina de seguridad (hall, auditorio, comedor, tópico)
+                        <td>Instalar lámina de seguridad certificada
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-chalkboard"></i><span>Mampara sin lámina</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Muro perimetral lado izquierdo salida vehicular sin cerco eléctrico
+                        <td>Instalar cerco eléctrico y sensores de intrusión
+                        <td>29/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-fence"></i><span>Muro sin cerco</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -436,11 +777,46 @@
             <table class="risk-table">
                 <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Cerco perimetral sin fotobeam ni cerco electrificado</td><td>Barreras electrónicas, CCTV nocturno, rondas aleatorias</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: cerco_perimetral_central.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puerta de acceso principal con candado simple y cerrojo desalineado</td><td>Cerradura alta seguridad, sensor magnético, cámara dirigida</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_candado_central.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Jefe de grupo disperso en múltiples sedes, sin procedimientos claros</td><td>Estandarizar SOP, tarjetas de acción rápida, capacitaciones</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: jefe_grupo_central.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Factor humano: riesgo inherente (deshonestidad, distracción)</td><td>Refuerzo selección, supervisión, rotación, tecnología</td><td>01/06/2026</td><td>Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: factor_humano_central.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Hurto de bienes por revisión superficial de mochilas</td><td>Reforzar control, CCTV, arcos detectores, campañas</td><td>01/06/2026</td><td>Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: hurto_mochilas_central.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Cerco perimetral sin fotobeam ni cerco electrificado
+                        <td>Barreras electrónicas, CCTV nocturno, rondas aleatorias
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-charging-station"></i><span>Cerco sin electrificar</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puerta de acceso principal con candado simple y cerrojo desalineado
+                        <td>Cerradura alta seguridad, sensor magnético, cámara dirigida
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-lock"></i><span>Candado simple</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Jefe de grupo disperso en múltiples sedes, sin procedimientos claros
+                        <td>Estandarizar SOP, tarjetas de acción rápida, capacitaciones
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-users"></i><span>Liderazgo disperso</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Factor humano: riesgo inherente (deshonestidad, distracción)
+                        <td>Refuerzo selección, supervisión, rotación, tecnología
+                        <td>01/06/2026
+                        <td>Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-brain"></i><span>Factor humano</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Hurto de bienes por revisión superficial de mochilas
+                        <td>Reforzar control, CCTV, arcos detectores, campañas
+                        <td>01/06/2026
+                        <td>Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-bag-shopping"></i><span>Revisión superficial</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -452,13 +828,48 @@
         <div class="sede-context">Cerco perimetral bajo, Call Center sin control de mochilas, exceso de confianza del personal, factor humano, hurto interno.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Foto</th><th>Status</th></tr></thead>
+                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Cerco perimetral bajo, oscuro, permite ingreso trepando</td><td>Elevar altura, concertina, iluminación, cámaras adicionales</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: cerco_bajo_faco.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Call Center: personal externo rehúsa revisión de mochilas y fotocheck</td><td>Control estricto, fotocheck obligatorio, protocolo</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: call_center_faco.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Exceso de confianza por antigüedad del personal</td><td>Rotación, supervisión directa, auditorías sorpresivas</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: exceso_confianza_faco.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Factor humano (riesgo inherente)</td><td>Fortalecer selección, ética, supervisión, tecnología</td><td>01/06/2026</td><td>Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: factor_humano_faco.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Hurto en áreas internas por revisión superficial</td><td>Controles aleatorios, CCTV, arcos detectores</td><td>01/06/2026</td><td>Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: hurto_interno_faco.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Cerco perimetral bajo, oscuro, permite ingreso trepando
+                        <td>Elevar altura, concertina, iluminación, cámaras adicionales
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-fence"></i><span>Cerco bajo</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Call Center: personal externo rehúsa revisión de mochilas y fotocheck
+                        <td>Control estricto, fotocheck obligatorio, protocolo
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-phone-alt"></i><span>Call Center sin control</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <td>
+                        <td>Exceso de confianza por antigüedad del personal
+                        <td>Rotación, supervisión directa, auditorías sorpresivas
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-user-check"></i><span>Confianza excesiva</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Factor humano (riesgo inherente)
+                        <td>Fortalecer selección, ética, supervisión, tecnología
+                        <td>01/06/2026
+                        <td>Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-user-shield"></i><span>Riesgo humano</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Hurto en áreas internas por revisión superficial
+                        <td>Controles aleatorios, CCTV, arcos detectores
+                        <td>01/06/2026
+                        <td>Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-theft"></i><span>Hurto interno</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -470,13 +881,48 @@
         <div class="sede-context">Perímetro sin cerco eléctrico, puerta peatonal abierta, puerta principal con candado simple, factor humano, hurto interno.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Imagen</th><th>Status</th></tr></thead>
+                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></td></thead>
                 <tbody>
-                    <tr><td>Perímetro sin cerco eléctrico ni sensores fotobeam</td><td>Instalar cerco eléctrico, fotobeam, CCTV nocturna</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: perimetro_medicina.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puerta peatonal completamente abierta, personal disuasivo no reactivo</td><td>Control de acceso con verificación, perfil reactivo, botón pánico</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_peatonal_medicina.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puerta principal con candado simple desalineado</td><td>Cerradura alta seguridad, sensor magnético, cámara</td><td>01/06/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: candado_medicina.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Factor humano (riesgo inherente)</td><td>Pruebas de integridad, supervisión, rotación</td><td>01/06/2026</td><td>Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: factor_humano_medicina.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Hurto de bienes por revisión superficial de mochilas</td><td>Reforzar control, CCTV, arcos detectores</td><td>01/06/2026</td><td>Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: hurto_medicina.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Perímetro sin cerco eléctrico ni sensores fotobeam
+                        <td>Instalar cerco eléctrico, fotobeam, CCTV nocturna
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-shield-virus"></i><span>Perímetro sin cerco</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puerta peatonal completamente abierta, personal disuasivo no reactivo
+                        <td>Control de acceso con verificación, perfil reactivo, botón pánico
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-door-open"></i><span>Puerta abierta</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puerta principal con candado simple desalineado
+                        <td>Cerradura alta seguridad, sensor magnético, cámara
+                        <td>01/06/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-lock"></i><span>Candado simple</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Factor humano (riesgo inherente)
+                        <td>Pruebas de integridad, supervisión, rotación
+                        <td>01/06/2026
+                        <td>Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-brain"></i><span>Factor humano</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Hurto de bienes por revisión superficial de mochilas
+                        <td>Reforzar control, CCTV, arcos detectores
+                        <td>01/06/2026
+                        <td>Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-bag-shopping"></i><span>Revisión débil</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -490,28 +936,63 @@
             <table class="risk-table">
                 <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Paredes perimetrales de vidrio templado sin sensores antiimpacto</td><td>Sensores antiimpacto, láminas de seguridad, cámaras orientadas</td><td>27.08.2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: paredes_vidrio_pacifico.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Falta de cerco físico perimetral e iluminación externa deficiente</td><td>Instalar cerco, reflectores LED con sensores, rondas nocturnas</td><td>27.08.2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: perimetro_oscuro_pacifico.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puerta principal de vidrio sin refuerzo ni cerradura de alta seguridad</td><td>Cerradura electrónica, refuerzo metálico, control biométrico</td><td>27.08.2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_vidrio_pacifico.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Paredes perimetrales de vidrio templado sin sensores antiimpacto
+                        <td>Sensores antiimpacto, láminas de seguridad, cámaras orientadas
+                        <td>27.08.2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-glass-cheers"></i><span>Vidrio sin sensor</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Falta de cerco físico perimetral e iluminación externa deficiente
+                        <td>Instalar cerco, reflectores LED con sensores, rondas nocturnas
+                        <td>27.08.2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-street-view"></i><span>Perímetro oscuro</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puerta principal de vidrio sin refuerzo ni cerradura de alta seguridad
+                        <td>Cerradura electrónica, refuerzo metálico, control biométrico
+                        <td>27.08.2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-door-closed"></i><span>Puerta débil</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 11. UTP Chiclayo -->
+    <!-- 11. UTP Chiclayo (2 riesgos ALTOS) -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-sun"></i><h2>UTP Chiclayo</h2><div class="badge-alto-count">2 riesgos ALTOS</div></div>
         <div class="sede-context">Perímetro con IDAT vulnerable, cochera con iluminación deficiente.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Foto</th><th>Status</th></tr></thead>
+                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Perímetro colindante con IDAT: ausencia de pared, rejas bajas</td><td>Muros más altos, concertinas, cámaras, sensores</td><td>01/06/2025</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: perimetro_idat_chiclayo.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Cochera vehicular colindante IDAT: iluminación insuficiente, rejas bajas sin cerco eléctrico</td><td>Elevar rejas, instalar cerco eléctrico, mejorar iluminación</td><td>01/06/2025</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: cochera_idat_chiclayo.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Perímetro colindante con IDAT: ausencia de pared, rejas bajas
+                        <td>Muros más altos, concertinas, cámaras, sensores
+                        <td>01/06/2025
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-school"></i><span>IDAT colindante</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Cochera vehicular colindante IDAT: iluminación insuficiente, rejas bajas sin cerco eléctrico
+                        <td>Elevar rejas, instalar cerco eléctrico, mejorar iluminación
+                        <td>01/06/2025
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-car"></i><span>Cochera oscura</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
-        <div class="sede-context" style="background:#fff0f0;"><i class="fas fa-info-circle"></i> Nota: Solo se listan los hallazgos con nivel ALTO. Los de nivel MEDIO no se incluyen en este informe ejecutivo.</div>
+        <div class="sede-context" style="background:#fff0f0;"><i class="fas fa-info-circle"></i> Nota: Solo se listan los hallazgos con nivel ALTO. Los de nivel MEDIO no se incluyen.</div>
     </div>
 
     <!-- 12. UTP Chimbote -->
@@ -522,14 +1003,28 @@
             <table class="risk-table">
                 <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Puertas de emergencia sin manija o descuadradas</td><td>Mantenimiento de puertas de emergencia</td><td>20/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puertas_emergencia_chimbote.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Punto vulnerable de robo en colindante con Universidad César Vallejo</td><td>Ampliar muro perimetral</td><td>Sin fecha</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: muro_colindante_chimbote.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Puertas de emergencia sin manija o descuadradas
+                        <td>Mantenimiento de puertas de emergencia
+                        <td>20/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-door-closed"></i><span>Puerta emergencia mal</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Punto vulnerable de robo en colindante con Universidad César Vallejo
+                        <td>Ampliar muro perimetral
+                        <td>Sin fecha
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-building"></i><span>Colindante UCV</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 13. UTP Huancayo -->
+    <!-- 13. UTP Huancayo (sin riesgos ALTOS) -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-mountain-city"></i><h2>UTP Huancayo</h2><div class="badge-alto-count">0 riesgos ALTOS</div></div>
         <div class="sede-context">En los hallazgos reportados, todos son de nivel BAJO o MEDIO. No se incluyen en este informe de riesgos altos.</div>
@@ -541,9 +1036,16 @@
         <div class="sede-context">Caída a distinto nivel y a mismo nivel (falta cinta antideslizante en escaleras).</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Foto</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Caída a distinto nivel y mismo nivel por falta de cinta antideslizante en escaleras</td><td>Instalar cinta antideslizante en escaleras</td><td>Pendiente</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: escaleras_ica.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Caída a distinto nivel y mismo nivel por falta de cinta antideslizante en escaleras
+                        <td>Instalar cinta antideslizante en escaleras
+                        <td>Pendiente
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-stairs"></i><span>Escalera resbalosa</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -555,9 +1057,16 @@
         <div class="sede-context">Humedad en techo del primer piso, cerca de luminaria, riesgo de cortocircuito.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></td></thead>
                 <tbody>
-                    <tr><td>Humedad en techo del pabellón C, cerca de luminaria, riesgo cortocircuito</td><td>Mantenimiento correctivo por personal de mantenimiento</td><td>27/02/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: humedad_techo_iquitos.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Humedad en techo del pabellón C, cerca de luminaria, riesgo cortocircuito
+                        <td>Mantenimiento correctivo por personal de mantenimiento
+                        <td>27/02/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-tint"></i><span>Humedad en techo</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -569,37 +1078,65 @@
         <div class="sede-context">Reja grande permite lanzamiento de objetos; manejo de llaves sin custodia.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Imagen</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Acceso principal: reja con barrotes permite lanzamiento de objetos</td><td>Mallas de protección, reforzar vigilancia, cámaras</td><td>14/09/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: reja_barrotes_josediaz.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Caseta vigilancia: manejo y custodia de llaves de ambientes sensibles</td><td>Gabinete metálico, protocolo doble firma, controles electrónicos</td><td>14/09/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: llaves_josediaz.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Acceso principal: reja con barrotes permite lanzamiento de objetos
+                        <td>Mallas de protección, reforzar vigilancia, cámaras
+                        <td>14/09/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-fence"></i><span>Reja con barrotes</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Caseta vigilancia: manejo y custodia de llaves de ambientes sensibles
+                        <td>Gabinete metálico, protocolo doble firma, controles electrónicos
+                        <td>14/09/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-key"></i><span>Llaves sin custodia</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 17. UTP Lima Norte (Los Olivos) -->
+    <!-- 17. UTP Lima Norte (0 ALTOS) -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-car"></i><h2>UTP Lima Norte (Los Olivos)</h2><div class="badge-alto-count">0 riesgos ALTOS</div></div>
         <div class="sede-context">Todos los hallazgos son de nivel MEDIO según el archivo. No se incluyen.</div>
     </div>
 
-    <!-- 18. UTP Lima Sur (VES) -->
+    <!-- 18. UTP Lima Sur -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-subway"></i><h2>UTP Lima Sur (Villa El Salvador)</h2><div class="badge-alto-count">2 riesgos ALTOS</div></div>
         <div class="sede-context">Posibilidad de atropello, puertas sin sistema de seguridad electrónica.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Foto</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th><tr></thead>
                 <tbody>
-                    <tr><td>Posibilidad de atropello por vehículos que no respetan señalización (frontis)</td><td>Uso de chaleco reflectante, reductores de velocidad, señalización</td><td>30/08/2025</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: atropello_limasur.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puertas de ingreso/salida sin sistema de seguridad electrónica (contactos magnéticos)</td><td>Instalar contactos magnéticos monitoreados</td><td>30/08/2025</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puertas_limasur.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Posibilidad de atropello por vehículos que no respetan señalización (frontis)
+                        <td>Uso de chaleco reflectante, reductores de velocidad, señalización
+                        <td>30/08/2025
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-car-crash"></i><span>Riesgo atropello</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puertas de ingreso/salida sin sistema de seguridad electrónica (contactos magnéticos)
+                        <td>Instalar contactos magnéticos monitoreados
+                        <td>30/08/2025
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-magnet"></i><span>Puerta sin contacto</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 19. UTP Natalio Sánchez (Of. Administrativas) -->
+    <!-- 19. UTP Natalio Sánchez -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-building"></i><h2>UTP Natalio Sánchez (Of. Administrativas)</h2><div class="badge-alto-count">1 riesgo ALTO</div></div>
         <div class="sede-context">Puesto de control vehicular sin pulsador de emergencia.</div>
@@ -607,7 +1144,14 @@
             <table class="risk-table">
                 <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Puesto de control vehicular sin pulsador de emergencia (expuesto a vía pública)</td><td>Instalar pulsador conectado a central y alarma sonora</td><td>14/09/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: pulsador_natalio.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Puesto de control vehicular sin pulsador de emergencia (expuesto a vía pública)
+                        <td>Instalar pulsador conectado a central y alarma sonora
+                        <td>14/09/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-bell"></i><span>Sin pulsador</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -619,10 +1163,24 @@
         <div class="sede-context">Falta de radio para agente de ronda externa, puerta de control de ingreso desprendida.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Imagen</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Falta de medio de comunicación (radio) para agente de ronda externa</td><td>Dotar de radio portátil</td><td>15/04/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: radio_piura.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Puerta de control de ingreso desprendida de sus bases (armellas rotas)</td><td>Reparar puerta de acceso en esclusa</td><td>15/04/2026</td><td>Cliente/Liderman</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_desprendida_piura.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Falta de medio de comunicación (radio) para agente de ronda externa
+                        <td>Dotar de radio portátil
+                        <td>15/04/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-radio"></i><span>Sin radio</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Puerta de control de ingreso desprendida de sus bases (armellas rotas)
+                        <td>Reparar puerta de acceso en esclusa
+                        <td>15/04/2026
+                        <td>Cliente/Liderman
+                        <td><div class="evidencia-icon"><i class="fas fa-door-closed"></i><span>Puerta desprendida</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -634,12 +1192,40 @@
         <div class="sede-context">Puerta principal abierta todo el día, acumulación de mototaxis, zona de seguridad inadecuada, laptops sin cadena de seguridad.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Foto</th><th>Status</th></tr></thead>
+                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Puerta principal abierta todo el día (07 a 23 h), riesgo intrusión violenta</td><td>Mantener puerta cerrada, control por agente de seguridad</td><td>Pendiente</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_principal_pucallpa.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Presencia excesiva de mototaxis estacionados en frontis, distracción para asalto</td><td>Coordinar con PNP o municipalidad para despejar</td><td>Pendiente</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: mototaxis_pucallpa.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Zona de evacuación y seguridad en lugar inadecuado (riesgo de aplastamiento)</td><td>Evaluar y cambiar zona de seguridad</td><td>Pendiente</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: zona_seguridad_pucallpa.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Laptops en oficinas sin cadena de seguridad, fácil sustracción</td><td>Colocar cadena de seguridad, asignar responsabilidad</td><td>Pendiente</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: laptops_sin_cadena_pucallpa.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Puerta principal abierta todo el día (07 a 23 h), riesgo intrusión violenta
+                        <td>Mantener puerta cerrada, control por agente de seguridad
+                        <td>Pendiente
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-door-open"></i><span>Puerta siempre abierta</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Presencia excesiva de mototaxis estacionados en frontis, distracción para asalto
+                        <td>Coordinar con PNP o municipalidad para despejar
+                        <td>Pendiente
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-motorcycle"></i><span>Mototaxis</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Zona de evacuación y seguridad en lugar inadecuado (riesgo de aplastamiento)
+                        <td>Evaluar y cambiar zona de seguridad
+                        <td>Pendiente
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-people-arrows"></i><span>Zona insegura</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Laptops en oficinas sin cadena de seguridad, fácil sustracción
+                        <td>Colocar cadena de seguridad, asignar responsabilidad
+                        <td>Pendiente
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-laptop"></i><span>Laptop sin cadena</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -651,27 +1237,34 @@
         <div class="sede-context">Puerta principal con chapa simple, sin refuerzo.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th><tr></thead>
                 <tbody>
-                    <tr><td>Puerta principal de metal pesado con chapa simple, vulnerable a forzamiento</td><td>Reemplazar por cerradura alta seguridad, control electrónico</td><td>14/09/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: puerta_chapa_saco.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Puerta principal de metal pesado con chapa simple, vulnerable a forzamiento
+                        <td>Reemplazar por cerradura alta seguridad, control electrónico
+                        <td>14/09/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-lock"></i><span>Chapa simple</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 23. UTP Salaverry -->
+    <!-- 23. UTP Salaverry (0 ALTOS) -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-water"></i><h2>UTP Salaverry</h2><div class="badge-alto-count">0 riesgos ALTOS</div></div>
-        <div class="sede-context">Todos los hallazgos son de nivel MEDIO (revisión de maletines, pulsadores, mamparas, etc.). No se incluyen.</div>
+        <div class="sede-context">Todos los hallazgos son de nivel MEDIO. No se incluyen.</div>
     </div>
 
-    <!-- 24. UTP SJL Torre 1 -->
+    <!-- 24. UTP SJL Torre 1 (0 ALTOS) -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-tower-cell"></i><h2>UTP SJL Torre 1</h2><div class="badge-alto-count">0 riesgos ALTOS</div></div>
-        <div class="sede-context">Hallazgos de nivel MEDIO (caseta vulnerable, pared perimetral sin sensores). No se incluyen.</div>
+        <div class="sede-context">Hallazgos de nivel MEDIO. No se incluyen.</div>
     </div>
 
-    <!-- 25. UTP SJL Torre 2 -->
+    <!-- 25. UTP SJL Torre 2 (0 ALTOS) -->
     <div class="sede-block">
         <div class="sede-header"><i class="fas fa-tower-broadcast"></i><h2>UTP SJL Torre 2</h2><div class="badge-alto-count">0 riesgos ALTOS</div></div>
         <div class="sede-context">Hallazgos de nivel MEDIO. No se incluyen.</div>
@@ -683,9 +1276,16 @@
         <div class="sede-context">Ventanas amplias sin restrictores de apertura, riesgo de caída.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Imagen</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></td></thead>
                 <tbody>
-                    <tr><td>Ventanas amplias sin restrictores de apertura, riesgo de caída desde pisos elevados</td><td>Instalar restrictores que impidan apertura mayor a 100 mm</td><td>31/05/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: ventanas_tacna.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Ventanas amplias sin restrictores de apertura, riesgo de caída desde pisos elevados
+                        <td>Instalar restrictores que impidan apertura mayor a 100 mm
+                        <td>31/05/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-window-maximize"></i><span>Ventana sin restricción</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -697,9 +1297,16 @@
         <div class="sede-context">Salida vehicular sin alarma sonora disuasiva, riesgo de atropello.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Foto</th><th>Status</th></tr></thead>
+                <thead><tr><th>Descripción</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Acceso vehicular sin alarma sonora, riesgo de accidentes con peatones</td><td>Instalar alarma sonora y señalización luminosa</td><td>14/09/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: alarma_vehicular_torre2.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Acceso vehicular sin alarma sonora, riesgo de accidentes con peatones
+                        <td>Instalar alarma sonora y señalización luminosa
+                        <td>14/09/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-volume-up"></i><span>Sin alarma sonora</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -711,13 +1318,48 @@
         <div class="sede-context">Círculos de seguridad bajo fachada de vidrio, falta lista de personal cesado, falta registro de firmas, falta visualización CCTV nocturna, falta megáfono.</div>
         <div class="risk-table-wrapper">
             <table class="risk-table">
-                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></tr></thead>
+                <thead><tr><th>Hallazgo</th><th>Medida</th><th>Fecha</th><th>Responsable</th><th>Evidencia</th><th>Status</th></td></thead>
                 <tbody>
-                    <tr><td>Círculos de seguridad ubicados frente a fachada de vidrio templado (riesgo por sismo)</td><td>Reubicar zonas seguras lejos de fachadas</td><td>18/04/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: circulos_seguridad_trujillo.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Personal Liderman sin relación actualizada de personal cesado o suspendido</td><td>Compartir lista actualizada semanalmente</td><td>18/04/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: lista_personal_trujillo.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Falta registro oficial de firmas y sellos autorizados para salida de bienes</td><td>Crear registro oficial validado</td><td>18/04/2026</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: registro_firmas_trujillo.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Personal de seguridad sin acceso visual a cámaras CCTV en garita durante turno nocturno</td><td>Habilitar visualización en garita</td><td>23/11/2025</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: cctv_trujillo.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
-                    <tr><td>Falta de megáfono para emergencias (incendios, desastres naturales)</td><td>Adquirir megáfono y realizar pruebas periódicas</td><td>23/11/2025</td><td>Cliente</td><td><div class="img-placeholder"><i class="fas fa-camera"></i></div><!-- Imagen: megafono_trujillo.jpg --></td><td><span class="badge-pendiente">PENDIENTE</span></td></tr>
+                    <tr>
+                        <td>Círculos de seguridad ubicados frente a fachada de vidrio templado (riesgo por sismo)
+                        <td>Reubicar zonas seguras lejos de fachadas
+                        <td>18/04/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-people-arrows"></i><span>Círculo inseguro</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Personal Liderman sin relación actualizada de personal cesado o suspendido
+                        <td>Compartir lista actualizada semanalmente
+                        <td>18/04/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-list"></i><span>Lista desactualizada</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Falta registro oficial de firmas y sellos autorizados para salida de bienes
+                        <td>Crear registro oficial validado
+                        <td>18/04/2026
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-file-signature"></i><span>Sin registro firmas</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Personal de seguridad sin acceso visual a cámaras CCTV en garita durante turno nocturno
+                        <td>Habilitar visualización en garita
+                        <td>23/11/2025
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-video"></i><span>Sin CCTV en garita</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
+                    <tr>
+                        <td>Falta de megáfono para emergencias (incendios, desastres naturales)
+                        <td>Adquirir megáfono y realizar pruebas periódicas
+                        <td>23/11/2025
+                        <td>Cliente
+                        <td><div class="evidencia-icon"><i class="fas fa-bullhorn"></i><span>Sin megáfono</span></div>
+                        <td><span class="badge-pendiente">PENDIENTE</span>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -730,5 +1372,16 @@
         <i class="fas fa-file-signature"></i> Documento elaborado por Liderman – Jefe de Riesgos. Para cualquier consulta, contactar al área de operaciones.
     </div>
 </div>
+
+<!-- ================================================== -->
+<!-- INSTRUCCIONES PARA AGREGAR MÁS IMÁGENES REALES:   -->
+<!-- 1. Localiza el hallazgo que quieras modificar.    -->
+<!-- 2. Reemplaza el contenido de la celda "Evidencia" -->
+<!--    que actualmente tiene:                          -->
+<!--    <div class="evidencia-icon">...</div>          -->
+<!--    por:                                            -->
+<!--    <img class="evidencia-img" src="URL_DE_TU_IMAGEN" alt="descripción"> -->
+<!-- 3. Asegúrate de que la URL sea accesible.         -->
+/* ================================================== */
 </body>
 </html>
